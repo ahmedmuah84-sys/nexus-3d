@@ -4,129 +4,215 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS 3D GOD MODE</title>
+<meta name="theme-color" content="#050711">
+<title>NEXUS 3D | GOD MODE</title>
 <style>
-:root {
-  --bg:#050711;--panel:#10182b;--cyan:#00f5ff;--pink:#ff36c9;
-  --text:#f4f7ff;--muted:#9ba9c7;--line:#263858;
+:root{
+ --bg:#050711;--panel:#10182b;--cyan:#00f5ff;
+ --pink:#ff36c9;--purple:#884dff;--green:#65ffb0;
+ --text:#f5f7ff;--muted:#9ba9c7;--line:#263858;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
  margin:0;background:var(--bg);color:var(--text);
- font-family:Arial,sans-serif;overflow-x:hidden;
+ font-family:Arial,Helvetica,sans-serif;overflow-x:hidden;
 }
 button,input,textarea{font:inherit}
-button{cursor:pointer}
-#particles{
+button{
+ cursor:pointer;color:white;background:#101d35;
+ border:1px solid var(--cyan);border-radius:10px;
+ padding:11px 16px;font-weight:bold;transition:.25s;
+}
+button:hover{
+ background:var(--cyan);color:#001018;
+ box-shadow:0 0 12px var(--cyan),0 0 30px var(--cyan);
+ transform:translateY(-3px);
+}
+a{color:var(--cyan)}
+#particles,#matrix{
  position:fixed;inset:0;width:100%;height:100%;
- z-index:-1;pointer-events:none;
+ pointer-events:none;
 }
+#particles{z-index:0}
+#matrix{z-index:40;display:none}
+header,main,footer{position:relative;z-index:2}
 header{
- position:sticky;top:0;z-index:20;
- display:flex;align-items:center;justify-content:space-between;
- gap:12px;padding:14px 5%;
- background:#080d1deF;backdrop-filter:blur(14px);
- border-bottom:1px solid var(--line);
+ position:sticky;top:0;z-index:50;
+ display:flex;justify-content:space-between;align-items:center;
+ gap:12px;flex-wrap:wrap;padding:13px 5%;
+ background:rgba(5,8,20,.88);backdrop-filter:blur(16px);
+ border-bottom:1px solid #00eaff44;
+ box-shadow:0 5px 30px #00eaff12;
 }
-.logo{font-size:23px;font-weight:900;color:var(--cyan);letter-spacing:3px}
+.logo{
+ font-size:24px;font-weight:1000;letter-spacing:3px;
+ color:var(--cyan);text-shadow:0 0 15px var(--cyan);
+}
 nav{display:flex;gap:14px;flex-wrap:wrap}
-nav a{color:white;text-decoration:none;font-size:13px}
-nav a:hover{color:var(--cyan)}
-button,.btn{
- border:1px solid var(--cyan);background:#10263a;color:white;
- border-radius:10px;padding:11px 16px;font-weight:bold;
+nav a{
+ text-decoration:none;color:white;font-size:13px;
  transition:.2s;
 }
-button:hover,.btn:hover{
- background:var(--cyan);color:#001018;
- box-shadow:0 0 20px #00f5ff77;transform:translateY(-2px)
+nav a:hover{color:var(--cyan);text-shadow:0 0 12px var(--cyan)}
+section{padding:45px 5%;scroll-margin-top:90px}
+.hero{
+ text-align:center;padding:80px 15px 55px;
+ position:relative;overflow:hidden;
 }
-.primary{background:linear-gradient(90deg,#00bfff,#8b42ff);border:0}
-.pink{border-color:var(--pink)}
-section{padding:45px 5%;scroll-margin-top:75px}
-.hero{text-align:center;padding:65px 15px 45px}
-.hero h1{font-size:clamp(35px,8vw,75px);margin:10px 0;color:var(--cyan);text-shadow:0 0 25px #00eaff77}
-.hero p{color:var(--muted);max-width:650px;margin:15px auto;line-height:1.7}
-.tag{color:var(--pink);letter-spacing:4px;font-size:12px}
-.section-title{font-size:27px;margin:0 0 8px}
-.sub{color:var(--muted);margin:0 0 22px}
+.hero:before{
+ content:"";position:absolute;width:280px;height:280px;
+ border:1px solid #00eaff33;border-radius:50%;
+ left:50%;top:50%;transform:translate(-50%,-50%);
+ box-shadow:0 0 40px #00eaff22,inset 0 0 40px #00eaff22;
+ animation:orbit 12s linear infinite;pointer-events:none;
+}
+@keyframes orbit{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.tag{
+ color:var(--pink);font-size:12px;letter-spacing:5px;
+ text-shadow:0 0 12px var(--pink);
+}
+.hero h1{
+ position:relative;font-size:clamp(38px,9vw,82px);
+ margin:18px 0;color:var(--cyan);
+ text-shadow:0 0 12px var(--cyan),0 0 35px #008cff;
+ animation:glow 3s ease-in-out infinite alternate;
+}
+@keyframes glow{
+ from{filter:brightness(.8)}
+ to{filter:brightness(1.5)}
+}
+.hero p{
+ max-width:650px;margin:12px auto 25px;
+ color:var(--muted);line-height:1.8;
+}
+.primary{
+ background:linear-gradient(100deg,#00bfff,#754bff,#ff36c9);
+ border:0;color:white;
+}
+.primary:hover{color:white;filter:brightness(1.2)}
 .search{
- width:100%;max-width:600px;padding:15px 18px;
- background:#10182b;border:1px solid var(--line);
- color:white;border-radius:12px;outline:none;margin:18px auto;
- display:block;
+ width:100%;max-width:600px;display:block;margin:22px auto;
+ padding:15px 18px;background:#0d1629;color:white;
+ border:1px solid var(--cyan);border-radius:12px;outline:none;
+ box-shadow:0 0 14px #00eaff20;
 }
-.search:focus{border-color:var(--cyan)}
+.search:focus{box-shadow:0 0 20px #00eaff66}
+.section-title{
+ font-size:28px;margin:0 0 8px;
+ text-shadow:0 0 12px #00eaff33;
+}
+.sub{color:var(--muted);margin:0 0 23px;line-height:1.6}
 .grid{
- display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:14px;
 }
 .card{
- background:linear-gradient(145deg,#121d33,#090e1c);
- border:1px solid var(--line);border-radius:15px;padding:17px;
- min-height:105px;transition:.2s;
+ min-width:0;position:relative;overflow:hidden;
+ padding:18px 14px;border-radius:15px;
+ background:linear-gradient(145deg,#121e35,#090e1d);
+ border:1px solid #28405f;
+ box-shadow:0 8px 22px #0005;
+ transition:transform .25s,border-color .25s,box-shadow .25s;
+ transform-style:preserve-3d;
 }
-.card:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 0 18px #00eaff22}
-.card h3{margin:0 0 8px;font-size:16px}
-.card p{margin:0 0 12px;color:var(--muted);font-size:12px;line-height:1.5}
-.card button{padding:8px 12px;font-size:12px}
-.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card:before{
+ content:"";position:absolute;inset:-100%;
+ background:linear-gradient(110deg,transparent 42%,#00eaff12 50%,transparent 58%);
+ transform:translateX(-50%);
+ transition:.5s;
+}
+.card:hover:before{transform:translateX(50%)}
+.card:hover{
+ transform:perspective(700px) rotateX(3deg) rotateY(-3deg) translateY(-5px);
+ border-color:var(--cyan);
+ box-shadow:0 0 20px #00eaff30,0 12px 25px #0008;
+}
+.card h3{font-size:15px;margin:0 0 9px;position:relative}
+.card p{font-size:12px;color:var(--muted);margin:0 0 13px;position:relative}
+.card button{font-size:11px;padding:8px 11px;position:relative}
+.tools{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:14px;
+}
 .tool{
- padding:18px;background:var(--panel);border:1px solid var(--line);
- border-radius:15px;min-width:0;
+ padding:18px;background:linear-gradient(145deg,#121d33,#090e1c);
+ border:1px solid #28405f;border-radius:15px;
+ box-shadow:0 8px 22px #0005;
 }
-.tool h3{margin-top:0;color:var(--cyan)}
+.tool h3{margin:0 0 12px;color:var(--cyan)}
+.tool p{font-size:13px;color:var(--muted);line-height:1.6}
 .tool input,.tool textarea{
- width:100%;padding:11px;border-radius:8px;
- background:#070d1b;color:white;border:1px solid var(--line);
- margin:5px 0 10px;
+ width:100%;padding:11px;margin:5px 0 10px;
+ background:#060c19;color:white;border:1px solid #35496a;
+ border-radius:8px;outline:none;
 }
-.tool textarea{min-height:90px;resize:vertical}
-.result{color:var(--cyan);min-height:22px;margin-top:10px}
-footer{text-align:center;padding:30px;color:var(--muted);border-top:1px solid var(--line)}
-#toast{
- position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
- background:#14233c;border:1px solid var(--cyan);padding:12px 18px;
- border-radius:10px;display:none;z-index:100;
+.tool textarea{min-height:95px;resize:vertical}
+.result{color:var(--green);margin-top:10px;min-height:20px;font-size:13px}
+.statbar{
+ display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
+ margin:20px 0;
 }
-#matrix{
- position:fixed;inset:0;width:100%;height:100%;
- z-index:30;pointer-events:none;display:none;
+.stat{
+ border:1px solid #29415e;border-radius:12px;
+ padding:12px 17px;background:#10182b;
+ color:var(--cyan);font-size:13px;
 }
 #mascot{
- position:fixed;right:13px;bottom:14px;z-index:25;
- background:#111d32;border:1px solid var(--cyan);
- border-radius:15px;padding:12px;max-width:190px;
- box-shadow:0 0 18px #00eaff33;
+ position:fixed;right:12px;bottom:12px;z-index:60;
+ width:175px;padding:12px;
+ background:rgba(10,22,42,.95);
+ border:1px solid var(--cyan);border-radius:15px;
+ box-shadow:0 0 20px #00eaff33;
 }
-#mascot button{padding:6px 9px;font-size:11px}
-#mascot p{font-size:12px;margin:5px 0 9px}
-#mascot strong{color:var(--cyan)}
-/* WELCOME SCREEN */
+#mascot strong{color:var(--cyan);font-size:13px}
+#mascot p{font-size:12px;line-height:1.5;margin:8px 0}
+#mascot button{padding:6px 8px;font-size:10px}
+footer{
+ text-align:center;padding:35px 15px;color:var(--muted);
+ border-top:1px solid #263858;
+}
+#toast{
+ position:fixed;bottom:205px;left:50%;transform:translateX(-50%);
+ z-index:100;background:#111d35;border:1px solid var(--cyan);
+ padding:12px 18px;border-radius:12px;display:none;
+ box-shadow:0 0 20px #00eaff44;text-align:center;
+ max-width:90%;font-size:13px;
+}
 #welcome{
  position:fixed;inset:0;z-index:9999;
  display:flex;align-items:center;justify-content:center;
  padding:20px;background:
- radial-gradient(circle at 50% 35%,#162a55,#050711 65%);
+ radial-gradient(ellipse at center,#152d58 0%,#080d1d 48%,#03050d 100%);
 }
 .welcome-box{
- width:100%;max-width:480px;text-align:center;padding:35px 23px;
- background:#0b1428;border:1px solid var(--cyan);
- border-radius:22px;box-shadow:0 0 45px #00eaff44;
+ width:100%;max-width:440px;text-align:center;
+ padding:38px 24px;border:1px solid var(--cyan);
+ border-radius:22px;background:rgba(7,15,33,.95);
+ box-shadow:0 0 30px #00eaff44,inset 0 0 30px #00eaff10;
+ animation:welcomePulse 3s infinite alternate;
 }
-.welcome-box h1{font-size:42px;color:var(--cyan);margin:5px}
-.welcome-box p{color:var(--muted);line-height:1.6}
-.welcome-box .btn{display:block;width:100%;margin:12px 0;text-decoration:none}
+@keyframes welcomePulse{
+ to{box-shadow:0 0 45px #00eaff66,inset 0 0 35px #00eaff22}
+}
+.welcome-box h1{
+ font-size:43px;color:var(--cyan);
+ text-shadow:0 0 20px var(--cyan);margin:15px 0;
+}
+.welcome-box p{color:var(--muted);line-height:1.7;font-size:14px}
+.welcome-box button{width:100%;margin-top:18px;padding:16px}
 .hidden{display:none!important}
-@media(min-width:700px){
+@media(min-width:750px){
  .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
  .tools{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media(max-width:520px){
- header{align-items:flex-start;flex-direction:column}
+ header{align-items:flex-start}
  nav{gap:10px}
+ nav a{font-size:12px}
  .tools{grid-template-columns:1fr}
- #mascot{max-width:155px}
+ #mascot{width:145px;opacity:.95}
+ .hero{padding-top:55px}
 }
 </style>
 </head>
@@ -135,87 +221,87 @@ footer{text-align:center;padding:30px;color:var(--muted);border-top:1px solid va
 <canvas id="particles"></canvas>
 <canvas id="matrix"></canvas>
 
-<!-- WELCOME GATE -->
+<!-- ONE BUTTON WELCOME SCREEN -->
 <div id="welcome">
  <div class="welcome-box">
   <div class="tag">WELCOME TO THE FUTURE</div>
   <h1>NEXUS 3D</h1>
-  <p>Enter the world of apps, games, tools and amazing effects.</p>
-  <a class="btn primary" href="https://www.tiktok.com/@nothing19312"
-     target="_blank" rel="noopener noreferrer">
-     FOLLOW MY PAGE
-  </a>
-  <button class="btn" id="goButton" type="button" onclick="enterSite()">
-    GO TO NEXUS ✦
+  <p>Your digital universe is waiting.<br>Tap below to visit our page and return to enter.</p>
+  <button class="primary" onclick="openTikTok()">
+   FOLLOW MY PAGE ⚡
   </button>
-  <p style="font-size:11px">Follow is optional. Press GO TO to enter the website.</p>
  </div>
 </div>
 
 <header>
  <div class="logo">NEXUS 3D</div>
  <nav>
-  <a href="#home">Home</a>
-  <a href="#apps">Apps</a>
-  <a href="#games">Games</a>
-  <a href="#arcade">Arcade</a>
-  <a href="#tools">Tools</a>
+  <a href="#home">HOME</a>
+  <a href="#apps">APPS</a>
+  <a href="#games">GAMES</a>
+  <a href="#arcade">ARCADE</a>
+  <a href="#tools">TOOLS</a>
  </nav>
  <button onclick="toggleMatrix()">MATRIX</button>
 </header>
 
-<main id="mainSite">
+<main>
 <section class="hero" id="home">
  <div class="tag">NEXT GENERATION DIGITAL WORLD</div>
  <h1>NEXUS GOD MODE</h1>
- <p>Welcome to your own digital universe. Explore apps, games, mini-games and interactive tools.</p>
- <button class="primary" onclick="document.getElementById('apps').scrollIntoView()">EXPLORE NOW</button>
+ <p>Enter your own digital universe. Explore apps, games, mini-games and powerful interactive tools.</p>
+ <div class="statbar">
+  <div class="stat">⚡ 50 APPS</div>
+  <div class="stat">🎮 50 GAMES</div>
+  <div class="stat">✨ 3D EFFECTS</div>
+ </div>
+ <button class="primary" onclick="goTo('apps')">EXPLORE UNIVERSE ✦</button>
  <button onclick="changeTheme()">CHANGE THEME</button>
- <input class="search" id="searchBox" placeholder="Search apps, games and tools..." oninput="searchItems()">
+ <input id="searchBox" class="search" placeholder="🔎 Search apps and games..." oninput="searchItems()">
 </section>
 
 <section id="apps">
  <h2 class="section-title">⚡ APPS ZONE</h2>
- <p class="sub">Explore the app collection.</p>
+ <p class="sub">Explore the NEXUS app collection.</p>
  <div class="grid" id="appsGrid"></div>
 </section>
 
 <section id="games">
  <h2 class="section-title">🎮 GAMES ZONE</h2>
- <p class="sub">Choose a game to explore.</p>
+ <p class="sub">Choose a game from the collection.</p>
  <div class="grid" id="gamesGrid"></div>
 </section>
 
 <section id="arcade">
  <h2 class="section-title">🕹️ NEXUS ARCADE</h2>
- <p class="sub">Play mini-games directly in your browser.</p>
+ <p class="sub">Play browser mini-games.</p>
  <div class="tools">
   <div class="tool">
    <h3>⚡ Click Challenge</h3>
-   <p>Click as many times as you can in 10 seconds.</p>
+   <p>Get as many clicks as possible in 10 seconds.</p>
    <button onclick="startClicker()">START</button>
    <button onclick="clickPoint()">CLICK!</button>
    <div class="result" id="clickResult">Score: 0</div>
   </div>
   <div class="tool">
    <h3>⏱️ Reaction Test</h3>
-   <p>Press start, wait for green, then click.</p>
+   <p>Wait for green, then tap as quickly as possible.</p>
    <button onclick="startReaction()">START</button>
    <button id="reactionButton" onclick="reactionClick()">WAIT...</button>
    <div class="result" id="reactionResult">Ready?</div>
   </div>
   <div class="tool">
    <h3>🎡 Lucky Number</h3>
-   <p>Generate a random number.</p>
+   <p>Generate a random number between 1 and 100.</p>
    <button onclick="luckyNumber()">SPIN</button>
    <div class="result" id="luckyResult">Good luck!</div>
   </div>
   <div class="tool">
-   <h3>🧠 Memory Game</h3>
-   <p>Remember this number and type it below.</p>
+   <h3>🧠 Memory Test</h3>
+   <p>Remember the number and type it below.</p>
    <button onclick="memoryStart()">SHOW NUMBER</button>
    <div class="result" id="memoryNumber">Ready?</div>
-   <input id="memoryInput" placeholder="Enter the number">
+   <input id="memoryInput" placeholder="Enter number">
    <button onclick="memoryCheck()">CHECK</button>
    <div class="result" id="memoryResult"></div>
   </div>
@@ -224,20 +310,20 @@ footer{text-align:center;padding:30px;color:var(--muted);border-top:1px solid va
 
 <section id="tools">
  <h2 class="section-title">🛠️ SMART TOOLS</h2>
- <p class="sub">Useful tools built into NEXUS.</p>
+ <p class="sub">Useful features inside your NEXUS universe.</p>
  <div class="tools">
   <div class="tool">
    <h3>📝 Notes</h3>
-   <textarea id="notes" placeholder="Write your notes here..."></textarea>
-   <button onclick="saveNotes()">SAVE NOTES</button>
-   <button onclick="loadNotes()">LOAD NOTES</button>
+   <textarea id="notes" placeholder="Write your notes..."></textarea>
+   <button onclick="saveNotes()">SAVE</button>
+   <button onclick="loadNotes()">LOAD</button>
    <div class="result" id="notesResult"></div>
   </div>
   <div class="tool">
-   <h3>📋 Task List</h3>
+   <h3>📋 Task Manager</h3>
    <input id="taskInput" placeholder="Write a task...">
    <button onclick="addTask()">ADD TASK</button>
-   <div id="taskList" class="result"></div>
+   <div class="result" id="taskList"></div>
   </div>
   <div class="tool">
    <h3>🧮 Calculator</h3>
@@ -247,21 +333,21 @@ footer{text-align:center;padding:30px;color:var(--muted);border-top:1px solid va
   </div>
   <div class="tool">
    <h3>🎨 Theme Creator</h3>
-   <p>Change the website accent color.</p>
+   <p>Choose your NEXUS glow color.</p>
    <button onclick="setAccent('#00f5ff')">CYAN</button>
    <button onclick="setAccent('#ff36c9')">PINK</button>
-   <button onclick="setAccent('#7cff4f')">GREEN</button>
-   <button onclick="setAccent('#b18cff')">PURPLE</button>
+   <button onclick="setAccent('#65ffb0')">GREEN</button>
+   <button onclick="setAccent('#a68aff')">PURPLE</button>
   </div>
   <div class="tool">
    <h3>✨ Surprise Generator</h3>
-   <p>Get a random fun message.</p>
+   <p>Get a random message.</p>
    <button onclick="surprise()">SURPRISE ME</button>
    <div class="result" id="surpriseResult"></div>
   </div>
   <div class="tool">
    <h3>📦 NEXUS APK</h3>
-   <p>Open the NEXUS APK download link.</p>
+   <p>Open your NEXUS APK download.</p>
    <button onclick="openAPK()">DOWNLOAD APK</button>
   </div>
  </div>
@@ -269,41 +355,66 @@ footer{text-align:center;padding:30px;color:var(--muted);border-top:1px solid va
 
 <section style="text-align:center">
  <h2 class="section-title">FOLLOW NEXUS</h2>
- <p class="sub">Visit our TikTok page.</p>
- <a class="btn primary" href="https://www.tiktok.com/@nothing19312" target="_blank" rel="noopener noreferrer">OPEN TIKTOK</a>
+ <p class="sub">Visit the official NEXUS TikTok page.</p>
+ <a href="https://www.tiktok.com/@nothing19312" target="_blank" rel="noopener noreferrer">
+  <button class="primary">OPEN TIKTOK</button>
+ </a>
 </section>
 </main>
 
 <div id="mascot">
  <strong>🤖 NEXUS BOT</strong>
- <p id="botMessage">Assalam-o-Alaikum! Welcome to NEXUS.</p>
+ <p id="botMessage">Assalam-o-Alaikum! NEXUS mein khush aamdeed!</p>
  <button onclick="speakBot()">SPEAK</button>
  <button onclick="newBotMessage()">CHAT</button>
 </div>
 
 <div id="toast"></div>
 
+<footer>
+ <div class="logo">NEXUS 3D</div>
+ <p>Created for the future. Explore • Create • Play.</p>
+ <p>© NEXUS 3D</p>
+</footer>
+
 <script>
 "use strict";
 
-/* IMPORTANT: WELCOME SCREEN FIX */
-function enterSite(){
- const welcome=document.getElementById("welcome");
- if(welcome){
-   welcome.classList.add("hidden");
-   welcome.style.display="none";
- }
- document.body.style.overflow="auto";
- showToast("Welcome to NEXUS 3D!");
- try{localStorage.setItem("nexusEntered","yes");}catch(e){}
+/* TIKTOK: ONE BUTTON, RETURN TO WEBSITE MENU */
+function openTikTok(){
+ try{
+  sessionStorage.setItem("nexusFollowOpened","yes");
+ }catch(e){}
+ window.location.href="https://www.tiktok.com/@nothing19312";
 }
-document.getElementById("goButton").addEventListener("click",enterSite);
 
-/* APK AND TIKTOK LINKS */
+/* When the visitor returns to this page with browser Back */
+function checkWelcomeReturn(){
+ try{
+  if(sessionStorage.getItem("nexusFollowOpened")==="yes"){
+   document.getElementById("welcome").classList.add("hidden");
+   document.body.style.overflow="auto";
+   sessionStorage.removeItem("nexusFollowOpened");
+   window.scrollTo(0,0);
+  }
+ }catch(e){}
+}
+window.addEventListener("pageshow",checkWelcomeReturn);
+document.addEventListener("DOMContentLoaded",checkWelcomeReturn);
+
+/* NAVIGATION */
+function goTo(id){
+ const target=document.getElementById(id);
+ if(target)target.scrollIntoView({behavior:"smooth"});
+}
+
+/* LINKS */
 const APK_URL="https://drive.google.com/uc?export=download&id=1BYYbr-XH3jWk8EOBYidYW2ZadLM8_Ayu";
-function openAPK(){window.open(APK_URL,"_blank","noopener");}
+function openAPK(){
+ window.open(APK_URL,"_blank","noopener,noreferrer");
+}
 
-/* 50 APP CARDS */
+/* APP AND GAME COLLECTION */
 const appNames=[
 "Calculator","Music Player","Video Player","Photo Editor","Weather",
 "Calendar","Clock","Notes","Translator","Maps",
@@ -317,7 +428,6 @@ const appNames=[
 "Link Saver","Idea Board","Photo Gallery","Video Gallery","NEXUS Settings"
 ];
 
-/* 50 GAME CARDS */
 const gameNames=[
 "Racing World","City Driver","Space Adventure","Zombie Escape","Puzzle Quest",
 "Snake Classic","Brick Breaker","Memory Match","Tap Challenge","Football Stars",
@@ -334,16 +444,21 @@ const gameNames=[
 function makeCards(names,containerId,type){
  const container=document.getElementById(containerId);
  names.forEach((name,index)=>{
-  const card=document.createElement("div");
+  const card=document.createElement("article");
   card.className="card searchable";
   card.dataset.name=name.toLowerCase();
-  card.innerHTML=
-   "<h3>"+(type==="app"?"📱":"🎮")+" "+name+"</h3>"+
-   "<p>"+(type==="app"?"NEXUS app slot "+(index+1):"NEXUS game slot "+(index+1))+"</p>"+
-   "<button type='button'>"+(type==="app"?"OPEN APP":"PLAY GAME")+"</button>";
-  card.querySelector("button").addEventListener("click",()=>{
-   showToast(name+" selected. This is a demo slot.");
+  const title=document.createElement("h3");
+  title.textContent=(type==="app"?"📱 ":"🎮 ")+name;
+  const description=document.createElement("p");
+  description.textContent=type==="app"
+   ?"NEXUS app slot "+(index+1)
+   :"NEXUS game slot "+(index+1);
+  const button=document.createElement("button");
+  button.textContent=type==="app"?"OPEN APP":"PLAY GAME";
+  button.addEventListener("click",()=>{
+   showToast(name+" is a demo slot. More features coming soon!");
   });
+  card.append(title,description,button);
   container.appendChild(card);
  });
 }
@@ -358,73 +473,76 @@ function searchItems(){
  });
 }
 
-/* TOAST MESSAGE */
+/* TOAST */
 let toastTimer;
 function showToast(message){
  const toast=document.getElementById("toast");
  toast.textContent=message;
  toast.style.display="block";
  clearTimeout(toastTimer);
- toastTimer=setTimeout(()=>toast.style.display="none",2300);
+ toastTimer=setTimeout(()=>toast.style.display="none",2500);
 }
 
-/* THEME */
+/* THEME COLORS */
+let themeIndex=0;
+const themes=["#00f5ff","#ff36c9","#65ffb0","#a68aff","#ffb347"];
 function setAccent(color){
  document.documentElement.style.setProperty("--cyan",color);
- showToast("Theme color changed!");
+ showToast("NEXUS theme changed!");
 }
-let themeIndex=0;
-const themes=["#00f5ff","#ff36c9","#7cff4f","#b18cff","#ffb347"];
 function changeTheme(){
  themeIndex=(themeIndex+1)%themes.length;
  setAccent(themes[themeIndex]);
 }
 
-/* MATRIX EFFECT */
-let matrixActive=false;
+/* MATRIX MODE */
+let matrixActive=false,matrixFrame=0;
+let matrixDrops=[];
 function toggleMatrix(){
  matrixActive=!matrixActive;
  const canvas=document.getElementById("matrix");
  canvas.style.display=matrixActive?"block":"none";
- if(matrixActive)drawMatrix();
- else if(matrixFrame)cancelAnimationFrame(matrixFrame);
+ if(matrixActive){
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
+  const columns=Math.floor(canvas.width/16);
+  matrixDrops=Array.from({length:columns},()=>Math.random()*-40);
+  drawMatrix();
+ }else{
+  cancelAnimationFrame(matrixFrame);
+  canvas.getContext("2d").clearRect(0,0,canvas.width,canvas.height);
+ }
 }
-let matrixFrame=0;
 function drawMatrix(){
  if(!matrixActive)return;
  const canvas=document.getElementById("matrix");
  const ctx=canvas.getContext("2d");
- canvas.width=innerWidth;canvas.height=innerHeight;
- const size=16,columns=Math.floor(canvas.width/size);
- const drops=Array.from({length:columns},()=>Math.random()*-50);
- function frame(){
-  if(!matrixActive)return;
-  ctx.fillStyle="rgba(0,0,0,0.08)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="#00ff88";ctx.font=size+"px monospace";
-  drops.forEach((y,i)=>{
-   ctx.fillText(Math.random()>.5?"1":"0",i*size,y*size);
-   if(y*size>canvas.height&&Math.random()>.97)drops[i]=0;
-   drops[i]++;
-  });
-  matrixFrame=requestAnimationFrame(frame);
- }
- frame();
+ ctx.fillStyle="rgba(0,0,0,0.09)";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+ ctx.fillStyle="#00ff88";
+ ctx.font="16px monospace";
+ matrixDrops.forEach((y,i)=>{
+  ctx.fillText(Math.random()>.5?"1":"0",i*16,y*16);
+  if(y*16>canvas.height&&Math.random()>.975)matrixDrops[i]=0;
+  matrixDrops[i]++;
+ });
+ matrixFrame=requestAnimationFrame(drawMatrix);
 }
 
-/* PARTICLE BACKGROUND */
+/* ANIMATED PARTICLES */
 const particleCanvas=document.getElementById("particles");
 const pctx=particleCanvas.getContext("2d");
 let particles=[];
 function resizeParticles(){
  particleCanvas.width=innerWidth;
  particleCanvas.height=innerHeight;
- particles=Array.from({length:65},()=>({
+ const count=innerWidth<600?35:75;
+ particles=Array.from({length:count},()=>({
   x:Math.random()*particleCanvas.width,
   y:Math.random()*particleCanvas.height,
-  vx:(Math.random()-.5)*.5,
-  vy:(Math.random()-.5)*.5,
-  r:Math.random()*2+1
+  vx:(Math.random()-.5)*.55,
+  vy:(Math.random()-.5)*.55,
+  r:Math.random()*1.8+.5
  }));
 }
 function animateParticles(){
@@ -433,25 +551,35 @@ function animateParticles(){
   p.x+=p.vx;p.y+=p.vy;
   if(p.x<0||p.x>particleCanvas.width)p.vx*=-1;
   if(p.y<0||p.y>particleCanvas.height)p.vy*=-1;
-  pctx.beginPath();pctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-  pctx.fillStyle="#00eaff";pctx.fill();
+  pctx.beginPath();
+  pctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+  pctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--cyan");
+  pctx.fill();
  });
  requestAnimationFrame(animateParticles);
 }
-window.addEventListener("resize",resizeParticles);
-resizeParticles();animateParticles();
+window.addEventListener("resize",()=>{
+ resizeParticles();
+ if(matrixActive){
+  const canvas=document.getElementById("matrix");
+  canvas.width=innerWidth;canvas.height=innerHeight;
+  matrixDrops=Array.from({length:Math.floor(canvas.width/16)},()=>Math.random()*-40);
+ }
+});
+resizeParticles();
+animateParticles();
 
 /* CLICK CHALLENGE */
 let clickScore=0,clickRunning=false,clickEnd=0;
+let clickInterval=null;
 function startClicker(){
- clickScore=0;clickRunning=true;
- clickEnd=Date.now()+10000;
- document.getElementById("clickResult").textContent="Score: 0 | 10 seconds!";
- const timer=setInterval(()=>{
+ clearInterval(clickInterval);
+ clickScore=0;clickRunning=true;clickEnd=Date.now()+10000;
+ clickInterval=setInterval(()=>{
   const left=Math.max(0,Math.ceil((clickEnd-Date.now())/1000));
   document.getElementById("clickResult").textContent="Score: "+clickScore+" | "+left+"s";
   if(Date.now()>=clickEnd){
-   clearInterval(timer);clickRunning=false;
+   clearInterval(clickInterval);clickRunning=false;
    document.getElementById("clickResult").textContent="Final score: "+clickScore;
   }
  },150);
@@ -463,172 +591,21 @@ function clickPoint(){
 }
 
 /* REACTION TEST */
-let reactionReady=false,reactionStart=0,reactionTimer;
+let reactionReady=false,reactionStart=0,reactionTimer=null;
 function startReaction(){
+ clearTimeout(reactionTimer);
+ reactionReady=false;
  const button=document.getElementById("reactionButton");
- clearTimeout(reactionTimer);reactionReady=false;
- button.textContent="WAIT...";button.style.background="#10263a";
+ button.textContent="WAIT...";
+ button.style.background="";
  document.getElementById("reactionResult").textContent="Wait for green...";
  reactionTimer=setTimeout(()=>{
-  reactionReady=true;reactionStart=performance.now();
-  button.textContent="CLICK NOW!";button.style.background="#16843c";
+  reactionReady=true;
+  reactionStart=performance.now();
+  button.textContent="CLICK NOW!";
+  button.style.background="#16843c";
  },1500+Math.random()*3000);
 }
 function reactionClick(){
  if(!reactionReady){
-  document.getElementById("reactionResult").textContent="Too early! Try again.";
-  clearTimeout(reactionTimer);return;
- }
- const time=Math.round(performance.now()-reactionStart);
- reactionReady=false;
- document.getElementById("reactionButton").textContent="WAIT...";
- document.getElementById("reactionButton").style.background="";
- document.getElementById("reactionResult").textContent="Your time: "+time+" ms";
-}
-
-/* LUCKY NUMBER */
-function luckyNumber(){
- document.getElementById("luckyResult").textContent=
-  "Your number: "+(Math.floor(Math.random()*100)+1);
-}
-
-/* MEMORY GAME */
-let memoryValue="";
-function memoryStart(){
- memoryValue=String(Math.floor(10000+Math.random()*90000));
- const output=document.getElementById("memoryNumber");
- output.textContent=memoryValue;
- setTimeout(()=>{if(output.textContent===memoryValue)output.textContent="Number hidden";},2200);
-}
-function memoryCheck(){
- const answer=document.getElementById("memoryInput").value.trim();
- document.getElementById("memoryResult").textContent=
-  answer===memoryValue&&memoryValue?"Correct! Great memory!":"Not quite. Try again!";
-}
-
-/* NOTES */
-function saveNotes(){
- try{
-  localStorage.setItem("nexusNotes",document.getElementById("notes").value);
-  document.getElementById("notesResult").textContent="Notes saved on this device.";
- }catch(e){document.getElementById("notesResult").textContent="Could not save notes.";}
-}
-function loadNotes(){
- try{
-  document.getElementById("notes").value=localStorage.getItem("nexusNotes")||"";
-  document.getElementById("notesResult").textContent="Notes loaded.";
- }catch(e){}
-}
-loadNotes();
-
-/* TASK LIST */
-let tasks=[];
-function addTask(){
- const input=document.getElementById("taskInput");
- const value=input.value.trim();
- if(!value)return;
- tasks.push(value);input.value="";renderTasks();
-}
-function renderTasks(){
- const list=document.getElementById("taskList");
- list.innerHTML="";
- tasks.forEach((task,index)=>{
-  const row=document.createElement("div");
-  row.style.margin="8px 0";
-  const label=document.createElement("span");
-  label.textContent="• "+task+" ";
-  const remove=document.createElement("button");
-  remove.textContent="DONE";
-  remove.style.padding="5px 8px";
-  remove.onclick=()=>{tasks.splice(index,1);renderTasks();};
-  row.append(label,remove);list.appendChild(row);
- });
-}
-
-/* SAFE BASIC CALCULATOR */
-function calculate(){
- const input=document.getElementById("calcInput").value.trim();
- const output=document.getElementById("calcResult");
- if(!/^[0-9+\-*/().\s]+$/.test(input)){
-  output.textContent="Only numbers and + - * / ( ) allowed.";
-  return;
- }
- try{
-  const tokens=input.match(/\d+(?:\.\d+)?|[()+\-*/]/g)||[];
-  if(tokens.join("")!==input.replace(/\s/g,""))throw Error();
-  let pos=0;
-  function expression(){
-   let value=term();
-   while(tokens[pos]==="+"||tokens[pos]==="-"){
-    const op=tokens[pos++],right=term();
-    value=op==="+"?value+right:value-right;
-   }
-   return value;
-  }
-  function term(){
-   let value=factor();
-   while(tokens[pos]==="*"||tokens[pos]==="/"){
-    const op=tokens[pos++],right=factor();
-    if(op==="/"&&right===0)throw Error();
-    value=op==="*"?value*right:value/right;
-   }
-   return value;
-  }
-  function factor(){
-   if(tokens[pos]==="-"){pos++;return -factor();}
-   if(tokens[pos]==="+"){pos++;return factor();}
-   if(tokens[pos]==="("){
-    pos++;const value=expression();
-    if(tokens[pos++]!==")")throw Error();
-    return value;
-   }
-   const token=tokens[pos++];
-   if(!token||!(/^\d/.test(token)))throw Error();
-   return Number(token);
-  }
-  const result=expression();
-  if(pos!==tokens.length||!Number.isFinite(result))throw Error();
-  output.textContent="Answer: "+result;
- }catch(e){output.textContent="Invalid calculation.";}
-}
-
-/* SURPRISE */
-const surprises=[
-"Keep learning and keep building!",
-"Your next idea could be amazing.",
-"Explore something new today!",
-"Small steps make big projects.",
-"Welcome to your digital universe!"
-];
-function surprise(){
- document.getElementById("surpriseResult").textContent=
-  surprises[Math.floor(Math.random()*surprises.length)];
-}
-
-/* URDU VOICE MASCOT */
-const botMessages=[
-"Assalam-o-Alaikum! NEXUS mein khush aamdeed!",
-"Welcome! Aaj kuch naya explore karte hain.",
-"Mehnat karte raho, apne ideas ko reality banao!",
-"Games aur tools explore karo. Enjoy!"
-];
-let botIndex=0;
-function newBotMessage(){
- botIndex=(botIndex+1)%botMessages.length;
- document.getElementById("botMessage").textContent=botMessages[botIndex];
-}
-function speakBot(){
- const text=document.getElementById("botMessage").textContent;
- if(!("speechSynthesis" in window)){showToast("Voice not supported in this browser.");return;}
- speechSynthesis.cancel();
- const utterance=new SpeechSynthesisUtterance(text);
- utterance.lang="ur-PK";
- utterance.rate=.9;
- speechSynthesis.speak(utterance);
-}
-
-/* DO NOT AUTO-LOCK THE SITE AFTER RETURNING FROM TIKTOK */
-document.body.style.overflow="auto";
-</script>
-</body>
-</html>
+  clearTimeout(reactionTime
