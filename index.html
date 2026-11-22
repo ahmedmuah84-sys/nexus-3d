@@ -1,262 +1,577 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#070414">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NEXUS 3D GOD MODE</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@400;600;700;800&display=swap');
-:root{--p:#ff32cf;--b:#30eaff;--v:#9855ff;--bg:#070414;--panel:#17102b;--fg:#fff}
+:root {
+  --bg:#050711;--panel:#10182b;--cyan:#00f5ff;--pink:#ff36c9;
+  --text:#f4f7ff;--muted:#9ba9c7;--line:#263858;
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:Poppins,sans-serif;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;z-index:-3;background:radial-gradient(ellipse at 15% 15%,#50116d88,transparent 45%),radial-gradient(ellipse at 85% 65%,#073e6b88,transparent 45%),linear-gradient(135deg,#070414,#100722,#071323);animation:nebula 15s infinite alternate}
-@keyframes nebula{to{filter:hue-rotate(80deg);transform:scale(1.08)}}
-#space,#fx{position:fixed;inset:0;pointer-events:none}
-#space{z-index:-2}#fx{z-index:80}
-*{scrollbar-width:thin;scrollbar-color:#a83dff #09051b}
-.top{position:sticky;top:0;z-index:30;background:#08051de8;backdrop-filter:blur(20px);border-bottom:1px solid #ffffff20;padding:12px 4%;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.logo{font:900 22px Orbitron;text-shadow:0 0 15px var(--p),0 0 30px var(--b)}
-.logo span{color:var(--p)}
-nav{display:flex;gap:13px;flex-wrap:wrap}
-nav a{font-size:11px;color:#d6c9f5}
-nav a:hover{color:var(--b)}
-button,a{cursor:pointer}
-button{font-family:inherit}
-.btn{border:1px solid #ffffff30;background:linear-gradient(110deg,#7737ee,#e52db8);color:white;padding:10px 15px;border-radius:12px;font-weight:700;box-shadow:0 0 17px #b42aff55;transition:.25s;text-decoration:none;display:inline-block}
-.btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 0 28px var(--p)}
-.alt{background:#ffffff10}
-.wrap{width:min(1200px,94%);margin:auto}
-.hero{min-height:470px;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:15px;padding:45px 0}
-.kicker{color:var(--b);letter-spacing:4px;font-size:11px;font-weight:800}
-h1{font:900 clamp(38px,7vw,80px)/1.04 Orbitron;background:linear-gradient(90deg,#fff,var(--p),var(--b));background-clip:text;color:transparent;filter:drop-shadow(0 0 15px #bd36ff55);margin:16px 0}
-.hero p{color:#c9bddf;line-height:1.9}
-.art{height:300px;display:grid;place-items:center;position:relative}
-.core{width:190px;height:190px;border-radius:50%;display:grid;place-items:center;font:900 90px Orbitron;background:radial-gradient(circle at 30% 25%,white,#fa5de3 10%,#7135f5 40%,#0a1833 72%);box-shadow:0 0 40px var(--p),0 0 100px var(--b);animation:float 4s infinite}
-.ring{position:absolute;width:270px;height:95px;border:2px solid var(--b);border-radius:50%;transform:rotate(-30deg);box-shadow:0 0 18px var(--b);animation:orbit 8s linear infinite}
-.ring.r2{transform:rotate(55deg);border-color:var(--p);animation-direction:reverse}
-@keyframes float{50%{transform:translateY(-17px) rotate(8deg)}}
-@keyframes orbit{to{rotate:360deg}}
-section{padding:28px 0;scroll-margin-top:80px}
-.head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:17px}
-h2{font:800 clamp(20px,4vw,29px) Orbitron;margin:0}
-.small{font-size:11px;color:#a99cbe;margin-top:7px}
-.panel{background:linear-gradient(145deg,#21143dcc,#0d1930dd);border:1px solid #ffffff20;border-radius:18px;padding:17px;backdrop-filter:blur(12px);box-shadow:0 12px 35px #0005}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.stat{text-align:center}.stat b{font:900 25px Orbitron;color:var(--b);display:block}.stat small{font-size:10px;color:#aaa}
-.search{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
-input,textarea{min-width:0;flex:1;background:#08051b;border:1px solid #55427c;color:white;padding:12px;border-radius:11px;outline:none}
-input:focus,textarea:focus{border-color:var(--b);box-shadow:0 0 12px #30eaff55}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.item{min-width:0;position:relative;overflow:hidden;padding:13px;border:1px solid #ffffff25;border-radius:15px;background:linear-gradient(145deg,#21143e,#0c172b);transition:.25s;animation:appear .5s both}
-.item:before{content:"";position:absolute;width:100px;height:100px;right:-40px;top:-40px;border-radius:50%;background:var(--p);opacity:.14;filter:blur(20px)}
-.item:hover{transform:translateY(-6px) rotateX(3deg);border-color:var(--b);box-shadow:0 0 23px #30eaff44}
-@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
-.itemtop{display:flex;align-items:center;gap:9px}
-.ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:linear-gradient(135deg,#823cff,#e52ab9);flex-shrink:0}
-.item h3{font-size:12px;margin:0 0 4px;overflow-wrap:anywhere}
-.item p{font-size:10px;color:#a99cbe;margin:0}
-.tag{display:block;color:var(--b);font-size:9px;margin-top:10px}
-.actions{display:flex;gap:6px;margin-top:11px}
-.actions button,.actions a{flex:1;text-align:center;text-decoration:none;font-size:10px;color:white;background:#ffffff12;border:1px solid #ffffff25;padding:8px 4px;border-radius:9px}
-.actions .dl{background:linear-gradient(90deg,#7537ee,#d62bb4);border:0}
-.chips{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
-.chip{background:#ffffff10;border:1px solid #ffffff22;color:white;padding:8px 11px;border-radius:30px;font-size:10px}
-.chip.active{background:#8439db}
-.featuregrid,.gamesgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.feature{min-height:110px;transition:.2s}
-.feature:hover{transform:translateY(-4px);border-color:var(--p)}
-.feature strong{display:block;font-size:12px;margin:7px 0}
-.feature span{font-size:23px}
-.feature p{font-size:10px;color:#aaa;margin:0}
-.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.tool h3{font-size:14px;margin:0 0 8px}
-.output{background:#08051a;border-radius:10px;padding:12px;font-size:12px;min-height:38px;margin-top:10px;overflow-wrap:anywhere}
-.big{font:900 38px Orbitron;text-align:center;color:var(--b);margin:14px}
-.mascot{display:flex;align-items:center;gap:15px}
-.wood{font-size:65px;animation:float 3s infinite}
-.mascot p{font-size:12px;line-height:1.8;color:#ddd}
-.wheel{width:180px;height:180px;border-radius:50%;margin:12px auto;background:conic-gradient(#ff32cf 0 45deg,#30eaff 45deg 90deg,#8b4dff 90deg 135deg,#ffca54 135deg 180deg,#ff32cf 180deg 225deg,#30eaff 225deg 270deg,#8b4dff 270deg 315deg,#ffca54 315deg);border:5px solid white;box-shadow:0 0 25px var(--p);transition:transform 3s cubic-bezier(.1,.8,.1,1)}
-footer{text-align:center;border-top:1px solid #ffffff20;padding:30px;color:#9c91b4;font-size:11px}
-.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,100px);z-index:110;background:#24133f;border:1px solid var(--p);padding:12px 18px;border-radius:12px;transition:.3s;font-size:12px;text-align:center;max-width:90%}
-.toast.show{transform:translate(-50%,0)}
-.modal{position:fixed;inset:0;background:#03020bee;z-index:100;display:grid;place-items:center;padding:15px}
-.modal.hide{display:none}
-.modalbox{width:min(420px,100%);padding:25px;text-align:center;border:1px solid var(--p);border-radius:22px;background:linear-gradient(140deg,#291044,#0b1931);box-shadow:0 0 50px #b52cff55}
-.modalbox p{font-size:12px;line-height:1.8;color:#d5c8e8}
-.modalbox .btn{width:100%;margin-top:10px}
-#topbtn{position:fixed;right:13px;bottom:18px;z-index:40;border-radius:50%;height:43px;width:43px;background:#17102c;color:white;border:1px solid var(--b);font-size:20px}
-.progress{height:3px;background:linear-gradient(90deg,var(--p),var(--b));position:fixed;top:0;left:0;z-index:50;width:0}
-@media(max-width:700px){.hero{grid-template-columns:1fr}.art{height:220px}.core{width:150px;height:150px;font-size:70px}.ring{width:220px}.stats{grid-template-columns:repeat(2,1fr)}.featuregrid,.gamesgrid{grid-template-columns:repeat(2,1fr)}nav{gap:8px}nav a{font-size:9px}.logo{font-size:17px}}
-@media(max-width:370px){.cards{gap:6px}.item{padding:9px}.ico{width:34px;height:34px}.item h3{font-size:10px}.actions button,.actions a{font-size:9px}.featuregrid{grid-template-columns:repeat(2,1fr)}}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,sans-serif;overflow-x:hidden;
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+#particles{
+ position:fixed;inset:0;width:100%;height:100%;
+ z-index:-1;pointer-events:none;
+}
+header{
+ position:sticky;top:0;z-index:20;
+ display:flex;align-items:center;justify-content:space-between;
+ gap:12px;padding:14px 5%;
+ background:#080d1deF;backdrop-filter:blur(14px);
+ border-bottom:1px solid var(--line);
+}
+.logo{font-size:23px;font-weight:900;color:var(--cyan);letter-spacing:3px}
+nav{display:flex;gap:14px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;font-size:13px}
+nav a:hover{color:var(--cyan)}
+button,.btn{
+ border:1px solid var(--cyan);background:#10263a;color:white;
+ border-radius:10px;padding:11px 16px;font-weight:bold;
+ transition:.2s;
+}
+button:hover,.btn:hover{
+ background:var(--cyan);color:#001018;
+ box-shadow:0 0 20px #00f5ff77;transform:translateY(-2px)
+}
+.primary{background:linear-gradient(90deg,#00bfff,#8b42ff);border:0}
+.pink{border-color:var(--pink)}
+section{padding:45px 5%;scroll-margin-top:75px}
+.hero{text-align:center;padding:65px 15px 45px}
+.hero h1{font-size:clamp(35px,8vw,75px);margin:10px 0;color:var(--cyan);text-shadow:0 0 25px #00eaff77}
+.hero p{color:var(--muted);max-width:650px;margin:15px auto;line-height:1.7}
+.tag{color:var(--pink);letter-spacing:4px;font-size:12px}
+.section-title{font-size:27px;margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 22px}
+.search{
+ width:100%;max-width:600px;padding:15px 18px;
+ background:#10182b;border:1px solid var(--line);
+ color:white;border-radius:12px;outline:none;margin:18px auto;
+ display:block;
+}
+.search:focus{border-color:var(--cyan)}
+.grid{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;
+}
+.card{
+ background:linear-gradient(145deg,#121d33,#090e1c);
+ border:1px solid var(--line);border-radius:15px;padding:17px;
+ min-height:105px;transition:.2s;
+}
+.card:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 0 18px #00eaff22}
+.card h3{margin:0 0 8px;font-size:16px}
+.card p{margin:0 0 12px;color:var(--muted);font-size:12px;line-height:1.5}
+.card button{padding:8px 12px;font-size:12px}
+.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tool{
+ padding:18px;background:var(--panel);border:1px solid var(--line);
+ border-radius:15px;min-width:0;
+}
+.tool h3{margin-top:0;color:var(--cyan)}
+.tool input,.tool textarea{
+ width:100%;padding:11px;border-radius:8px;
+ background:#070d1b;color:white;border:1px solid var(--line);
+ margin:5px 0 10px;
+}
+.tool textarea{min-height:90px;resize:vertical}
+.result{color:var(--cyan);min-height:22px;margin-top:10px}
+footer{text-align:center;padding:30px;color:var(--muted);border-top:1px solid var(--line)}
+#toast{
+ position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+ background:#14233c;border:1px solid var(--cyan);padding:12px 18px;
+ border-radius:10px;display:none;z-index:100;
+}
+#matrix{
+ position:fixed;inset:0;width:100%;height:100%;
+ z-index:30;pointer-events:none;display:none;
+}
+#mascot{
+ position:fixed;right:13px;bottom:14px;z-index:25;
+ background:#111d32;border:1px solid var(--cyan);
+ border-radius:15px;padding:12px;max-width:190px;
+ box-shadow:0 0 18px #00eaff33;
+}
+#mascot button{padding:6px 9px;font-size:11px}
+#mascot p{font-size:12px;margin:5px 0 9px}
+#mascot strong{color:var(--cyan)}
+/* WELCOME SCREEN */
+#welcome{
+ position:fixed;inset:0;z-index:9999;
+ display:flex;align-items:center;justify-content:center;
+ padding:20px;background:
+ radial-gradient(circle at 50% 35%,#162a55,#050711 65%);
+}
+.welcome-box{
+ width:100%;max-width:480px;text-align:center;padding:35px 23px;
+ background:#0b1428;border:1px solid var(--cyan);
+ border-radius:22px;box-shadow:0 0 45px #00eaff44;
+}
+.welcome-box h1{font-size:42px;color:var(--cyan);margin:5px}
+.welcome-box p{color:var(--muted);line-height:1.6}
+.welcome-box .btn{display:block;width:100%;margin:12px 0;text-decoration:none}
+.hidden{display:none!important}
+@media(min-width:700px){
+ .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .tools{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:520px){
+ header{align-items:flex-start;flex-direction:column}
+ nav{gap:10px}
+ .tools{grid-template-columns:1fr}
+ #mascot{max-width:155px}
+}
 </style>
 </head>
 <body>
-<canvas id="space"></canvas><canvas id="fx"></canvas>
-<div class="progress" id="progress"></div>
-<header class="top">
- <div class="logo">NEXUS<span>3D</span></div>
- <nav><a href="#home">HOME</a><a href="#apps">APPS</a><a href="#games">GAMES</a><a href="#effects">FX LAB</a><a href="#arcade">ARCADE</a></nav>
- <button class="btn" onclick="soundToggle()">🔊</button>
-</header>
 
-<main class="wrap">
-<section class="hero" id="home">
- <div>
-  <div class="kicker">✦ REALITY IS YOUR PLAYGROUND ✦</div>
-  <h1>GOD<br>MODE.</h1>
-  <p>Welcome to the next level of NEXUS. A futuristic digital universe filled with games, apps, visual effects, challenges and endless exploration.</p>
-  <button class="btn" onclick="document.querySelector('#apps').scrollIntoView()">🚀 EXPLORE UNIVERSE</button>
-  <button class="btn alt" onclick="randomTheme()">🎨 RANDOM WORLD</button>
+<canvas id="particles"></canvas>
+<canvas id="matrix"></canvas>
+
+<!-- WELCOME GATE -->
+<div id="welcome">
+ <div class="welcome-box">
+  <div class="tag">WELCOME TO THE FUTURE</div>
+  <h1>NEXUS 3D</h1>
+  <p>Enter the world of apps, games, tools and amazing effects.</p>
+  <a class="btn primary" href="https://www.tiktok.com/@nothing19312"
+     target="_blank" rel="noopener noreferrer">
+     FOLLOW MY PAGE
+  </a>
+  <button class="btn" id="goButton" type="button" onclick="enterSite()">
+    GO TO NEXUS ✦
+  </button>
+  <p style="font-size:11px">Follow is optional. Press GO TO to enter the website.</p>
  </div>
- <div class="art"><div class="ring"></div><div class="ring r2"></div><div class="core">N</div></div>
-</section>
-
-<div class="stats">
- <div class="panel stat"><b>100+</b><small>APP + GAME SLOTS</small></div>
- <div class="panel stat"><b>1200+</b><small>FX COMBINATIONS</small></div>
- <div class="panel stat"><b>3D</b><small>NEON EXPERIENCE</small></div>
- <div class="panel stat"><b>∞</b><small>EXPLORATION</small></div>
 </div>
 
-<section>
- <div class="panel mascot">
-  <div class="wood">🪵</div>
-  <div><h2>YO! NEXUS PLAYER</h2><p id="say">اوئے ہوئے! نیکسس گاڈ موڈ میں خوش آمدید! آج کیا نیا کمال کرنا ہے؟ 🔥</p><button class="btn" onclick="speak()">🔊 HEAR MASCOT</button><button class="btn alt" onclick="funny()">😂 FUNNY MESSAGE</button></div>
- </div>
+<header>
+ <div class="logo">NEXUS 3D</div>
+ <nav>
+  <a href="#home">Home</a>
+  <a href="#apps">Apps</a>
+  <a href="#games">Games</a>
+  <a href="#arcade">Arcade</a>
+  <a href="#tools">Tools</a>
+ </nav>
+ <button onclick="toggleMatrix()">MATRIX</button>
+</header>
+
+<main id="mainSite">
+<section class="hero" id="home">
+ <div class="tag">NEXT GENERATION DIGITAL WORLD</div>
+ <h1>NEXUS GOD MODE</h1>
+ <p>Welcome to your own digital universe. Explore apps, games, mini-games and interactive tools.</p>
+ <button class="primary" onclick="document.getElementById('apps').scrollIntoView()">EXPLORE NOW</button>
+ <button onclick="changeTheme()">CHANGE THEME</button>
+ <input class="search" id="searchBox" placeholder="Search apps, games and tools..." oninput="searchItems()">
 </section>
 
 <section id="apps">
- <div class="head"><div><h2>📱 APP UNIVERSE</h2><div class="small">50 app slots. Your first APK is already connected.</div></div></div>
- <div class="search"><input id="as" placeholder="Search apps..." oninput="render('app')"><button class="btn" onclick="edit('app')">＋ ADD</button></div>
- <div class="chips"><button class="chip active" onclick="filterSet('app','all',this)">ALL</button><button class="chip" onclick="filterSet('app','ready',this)">READY</button><button class="chip" onclick="filterSet('app','empty',this)">EMPTY</button></div>
- <div class="cards" id="apps"></div>
+ <h2 class="section-title">⚡ APPS ZONE</h2>
+ <p class="sub">Explore the app collection.</p>
+ <div class="grid" id="appsGrid"></div>
 </section>
 
 <section id="games">
- <div class="head"><div><h2>🎮 GAMING GALAXY</h2><div class="small">50 slots for your favorite games.</div></div></div>
- <div class="search"><input id="gs" placeholder="Search games..." oninput="render('game')"><button class="btn" onclick="edit('game')">＋ ADD</button></div>
- <div class="chips"><button class="chip active" onclick="filterSet('game','all',this)">ALL</button><button class="chip" onclick="filterSet('game','ready',this)">READY</button><button class="chip" onclick="filterSet('game','empty',this)">EMPTY</button></div>
- <div class="cards" id="games"></div>
-</section>
-
-<section id="effects">
- <div class="head"><div><h2>🌌 GOD MODE FX LAB</h2><div class="small">Generate thousands of combinations using procedural effects.</div></div></div>
- <div class="panel">
-  <div class="big" id="fxnum">1200+</div>
-  <p class="small">Dynamic visual combinations generated from color palettes, gradients, particles, glow styles and motion patterns.</p>
-  <button class="btn" onclick="randomTheme()">🎨 RANDOM THEME</button>
-  <button class="btn" onclick="burst(10)">💥 FX BURST</button>
-  <button class="btn" onclick="matrixMode()">🟢 MATRIX MODE</button>
-  <button class="btn alt" onclick="resetTheme()">↩ RESET</button>
-  <div class="output" id="fxstatus">Current world: Neon Galaxy</div>
- </div>
- <div class="featuregrid" id="featuregrid" style="margin-top:12px"></div>
+ <h2 class="section-title">🎮 GAMES ZONE</h2>
+ <p class="sub">Choose a game to explore.</p>
+ <div class="grid" id="gamesGrid"></div>
 </section>
 
 <section id="arcade">
- <div class="head"><div><h2>🕹️ ULTIMATE ARCADE</h2><div class="small">Mini challenges inside your browser.</div></div></div>
+ <h2 class="section-title">🕹️ NEXUS ARCADE</h2>
+ <p class="sub">Play mini-games directly in your browser.</p>
  <div class="tools">
-  <div class="panel tool">
-   <h3>⚡ NEON CLICKER</h3><div class="big" id="score">0</div>
-   <button class="btn" onclick="clicker()">TAP TO SCORE</button><button class="btn alt" onclick="resetScore()">RESET</button>
-   <div class="output" id="best">Best: 0</div>
+  <div class="tool">
+   <h3>⚡ Click Challenge</h3>
+   <p>Click as many times as you can in 10 seconds.</p>
+   <button onclick="startClicker()">START</button>
+   <button onclick="clickPoint()">CLICK!</button>
+   <div class="result" id="clickResult">Score: 0</div>
   </div>
-  <div class="panel tool">
-   <h3>🎯 REACTION CHALLENGE</h3><div class="big" id="reaction">READY</div>
-   <button class="btn" onclick="startReaction()">START</button>
-   <div class="output" id="reactionmsg">Wait for green, then tap!</div>
+  <div class="tool">
+   <h3>⏱️ Reaction Test</h3>
+   <p>Press start, wait for green, then click.</p>
+   <button onclick="startReaction()">START</button>
+   <button id="reactionButton" onclick="reactionClick()">WAIT...</button>
+   <div class="result" id="reactionResult">Ready?</div>
   </div>
-  <div class="panel tool">
-   <h3>🧠 MEMORY MATCH</h3><div id="memory" style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:12px 0"></div>
-   <button class="btn" onclick="newMemory()">NEW GAME</button>
-   <div class="output" id="memstatus">Find all pairs!</div>
+  <div class="tool">
+   <h3>🎡 Lucky Number</h3>
+   <p>Generate a random number.</p>
+   <button onclick="luckyNumber()">SPIN</button>
+   <div class="result" id="luckyResult">Good luck!</div>
   </div>
-  <div class="panel tool">
-   <h3>🎡 LUCKY WHEEL</h3><div class="wheel" id="wheel"></div>
-   <button class="btn" onclick="spinWheel()">SPIN!</button><div class="output" id="wheelmsg">Try your luck!</div>
-  </div>
-  <div class="panel tool">
-   <h3>🎲 RANDOM NUMBER</h3><div class="big" id="random">?</div>
-   <button class="btn" onclick="document.getElementById('random').textContent=Math.ceil(Math.random()*100)">GENERATE</button>
-  </div>
-  <div class="panel tool">
-   <h3>🎨 COLOR GENERATOR</h3><div id="colorbox" style="height:65px;background:#873bff;border-radius:12px;margin:12px 0"></div>
-   <div class="output" id="colorcode">#873BFF</div><button class="btn" onclick="newColor()">NEW COLOR</button>
-  </div>
-  <div class="panel tool">
-   <h3>🔮 FORTUNE MACHINE</h3><div class="output" id="fortune">Your next great idea could start today!</div>
-   <button class="btn" onclick="fortune()">SURPRISE ME</button>
-  </div>
-  <div class="panel tool">
-   <h3>🧮 CALCULATOR</h3><input id="calc" placeholder="Example: 12*8+4">
-   <button class="btn" onclick="calculate()">CALCULATE</button><div class="output" id="answer">Answer appears here.</div>
-  </div>
-  <div class="panel tool">
-   <h3>📝 QUICK NOTES</h3><textarea id="notes" rows="3" placeholder="Write something..."></textarea>
-   <button class="btn" onclick="saveNotes()">SAVE</button><div class="output" id="noteStatus">Saved locally on this browser.</div>
-  </div>
-  <div class="panel tool">
-   <h3>✅ MISSION LIST</h3><input id="task" placeholder="Add a mission...">
-   <button class="btn" onclick="addTask()">ADD TASK</button><div class="output" id="tasks">No tasks yet.</div>
+  <div class="tool">
+   <h3>🧠 Memory Game</h3>
+   <p>Remember this number and type it below.</p>
+   <button onclick="memoryStart()">SHOW NUMBER</button>
+   <div class="result" id="memoryNumber">Ready?</div>
+   <input id="memoryInput" placeholder="Enter the number">
+   <button onclick="memoryCheck()">CHECK</button>
+   <div class="result" id="memoryResult"></div>
   </div>
  </div>
 </section>
 
-<section>
- <div class="panel" style="text-align:center">
-  <div class="kicker">JOIN THE CREATOR COMMUNITY</div>
-  <h2 style="margin:12px">FOLLOW @nothing19312</h2>
-  <p class="small">Videos, updates and NEXUS adventures.</p>
-  <a class="btn" href="https://www.tiktok.com/@nothing19312" target="_blank" rel="noopener">🎵 FOLLOW ON TIKTOK</a>
+<section id="tools">
+ <h2 class="section-title">🛠️ SMART TOOLS</h2>
+ <p class="sub">Useful tools built into NEXUS.</p>
+ <div class="tools">
+  <div class="tool">
+   <h3>📝 Notes</h3>
+   <textarea id="notes" placeholder="Write your notes here..."></textarea>
+   <button onclick="saveNotes()">SAVE NOTES</button>
+   <button onclick="loadNotes()">LOAD NOTES</button>
+   <div class="result" id="notesResult"></div>
+  </div>
+  <div class="tool">
+   <h3>📋 Task List</h3>
+   <input id="taskInput" placeholder="Write a task...">
+   <button onclick="addTask()">ADD TASK</button>
+   <div id="taskList" class="result"></div>
+  </div>
+  <div class="tool">
+   <h3>🧮 Calculator</h3>
+   <input id="calcInput" placeholder="Example: 12 + 8 * 2">
+   <button onclick="calculate()">CALCULATE</button>
+   <div class="result" id="calcResult"></div>
+  </div>
+  <div class="tool">
+   <h3>🎨 Theme Creator</h3>
+   <p>Change the website accent color.</p>
+   <button onclick="setAccent('#00f5ff')">CYAN</button>
+   <button onclick="setAccent('#ff36c9')">PINK</button>
+   <button onclick="setAccent('#7cff4f')">GREEN</button>
+   <button onclick="setAccent('#b18cff')">PURPLE</button>
+  </div>
+  <div class="tool">
+   <h3>✨ Surprise Generator</h3>
+   <p>Get a random fun message.</p>
+   <button onclick="surprise()">SURPRISE ME</button>
+   <div class="result" id="surpriseResult"></div>
+  </div>
+  <div class="tool">
+   <h3>📦 NEXUS APK</h3>
+   <p>Open the NEXUS APK download link.</p>
+   <button onclick="openAPK()">DOWNLOAD APK</button>
+  </div>
  </div>
+</section>
+
+<section style="text-align:center">
+ <h2 class="section-title">FOLLOW NEXUS</h2>
+ <p class="sub">Visit our TikTok page.</p>
+ <a class="btn primary" href="https://www.tiktok.com/@nothing19312" target="_blank" rel="noopener noreferrer">OPEN TIKTOK</a>
 </section>
 </main>
 
-<footer><div class="logo">NEXUS<span>3D</span></div><p>YOUR WORLD. YOUR RULES.</p><p>GOD MODE DIGITAL EXPERIENCE · 2026</p></footer>
-<button id="topbtn" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
-<div class="toast" id="toast"></div>
+<div id="mascot">
+ <strong>🤖 NEXUS BOT</strong>
+ <p id="botMessage">Assalam-o-Alaikum! Welcome to NEXUS.</p>
+ <button onclick="speakBot()">SPEAK</button>
+ <button onclick="newBotMessage()">CHAT</button>
+</div>
 
-<div class="modal" id="welcome">
- <div class="modalbox">
-  <div style="font-size:65px">🪵</div>
-  <div class="kicker">THE UNIVERSE IS OPEN</div>
-  <h2>NEXUS 3D GOD MODE</h2>
-  <p>نیکسس میں خوش آمدید! پہلے ہمارے TikTok کو فالو کریں، پھر اس ڈیجیٹل دنیا کو explore کریں۔ 🔥</p>
-  <a class="btn" href="https://www.tiktok.com/@nothing19312" target="_blank" rel="noopener">🎵 FOLLOW TIKTOK</a>
-  <button class="btn alt" onclick="enter()">🚀 ENTER GOD MODE</button>
- </div>
-</div>
-<div class="modal hide" id="editor">
- <div class="modalbox">
-  <h2 id="edtitle">EDIT SLOT</h2>
-  <p>Enter the name and a real download URL.</p>
-  <input id="edname" placeholder="Name">
-  <input id="edurl" placeholder="https://download-link..." style="margin-top:8px">
-  <button class="btn" onclick="saveSlot()">SAVE</button>
-  <button class="btn alt" onclick="closeEditor()">CANCEL</button>
- </div>
-</div>
+<div id="toast"></div>
 
 <script>
-const APK="https://drive.google.com/uc?export=download&id=1BYYbr-XH3jWk8EOBYidYW2ZadLM8_Ayu";
-const icons=["📱","✨","🚀","🎨","📷","🎧","🌈","⚡","💎","🛠️","🌌","🧩","🎯","🔥","🪐"];
-let apps=Array.from({length:50},(_,i)=>({name:i===0?"NEXUS APK":"App Slot "+(i+1),url:i===0?APK:"",icon:icons[i%15]}));
-let games=Array.from({length:50},(_,i)=>({name:"Game Slot "+(i+1),url:"",icon:["🎮","🏎️","⚔️","👾","🏆","🕹️"][i%6]}));
-let filters={app:"all",game:"all"},editType="app",editIndex=-1;
-function load(){try{let a=JSON.parse(localStorage.getItem("god_apps"));let g=JSON.parse(localStorage.getItem("god_games"));if(a?.length===50)apps=a;if(g?.length===50)games=g}catch(e){}}
-function save(){try{localStorage.setItem("god_apps",JSON.stringify(apps));localStorage.setItem("god_games",JSON.stringify(games))}catch(e){toast("Save unavailable")}}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function render(t){let data=t==="app"?apps:games,q=document.getElementById(t==="app"?"as":"gs").value.toLowerCase(),f=filters[t];document.getElementById(t==="app"?"apps":"games").innerHTML=data.map((x,i)=>({...x,i})).filter(x=>(f==="all"||(f==="ready"?!!x.url:!x.url))&&(x.name+" "+x.icon).toLowerCase().includes(q)).map(x=>`<article class="item"><div class="itemtop"><div class="ico">${x.icon}</div><div><h3>${esc(x.name)}</h3><p>NEXUS download slot ${x.i+1}</p></div></div><span class="tag">${x.url?"● READY":"○ EMPTY"}</span><div class="actions">${x.url?`<a class="dl" href="${valid(x.url)}" target="_blank" rel="noopener" onclick="announce('${x.name.replace(/'/g,"")}')">⬇ DOWNLOAD</a>`:'<button onclick="toast(\'Add a download link first.\')">COMING SOON</button>'}<button onclick="edit('${t}',${x.i})">✏️ EDIT</button></div></article>`).join("")||'<div class="panel">No matching results.</div>'}
-function valid(s){try{let u=new URL(s);return ["http:","https:"].includes(u.protocol)?u.href:"#"}catch(e){return "#"}}
-function filterSet(t,f,b){filters[t]=f;b.parentElement.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active");render(t)}
-function edit(t,i=-1){editType=t;editIndex=i;let x=(t==="app"?apps:games)[i]||{name:"",url:""};document.getElementById("edtitle").textContent=i<0?"ADD "+t.toUpperCase():"EDIT "+t.toUpperCase();document.getElementById("edname").value=x.name;document.getElementById("edurl").value=x.url;document.getElementById("editor").classList.remove("hide")}
-function closeEditor(){document.getElementById("editor").classList.add("hide")}
-function saveSlot(){let n=document.getElementById("edname").value.trim(),u=document.getElementById("edurl").value.trim();if(!n){toast("Enter a name");return}if(u){try{let a=new URL(u);if(!["http:","https:"].includes(a.protocol))throw 0}catch(e){toast("Enter a valid web link");return}}let d=editType==="app"?apps:games,i=editIndex<0?d.findIndex(x=>!x.url&&/Slot/.test(x.name)):editIndex;if(i<0){toast("No empty slots left");return}d[i]={...d[i],name:n,url:u};save();closeEditor();render(editType);toast("Saved on this browser")}
-let toastTimer;function toast(s){let x=document.getElementById("toast");x.textContent=s;x.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>x.classList.remove("show"),2300)}
-function enter(){document.getElementById("welcome").classList.add("hide");speak()}
-function speak(){say("اوئے ہوئے! نیکسس گاڈ موڈ میں خوش آمدید! یہاں گیمز بھی ہیں اور ایپس بھی!")}
-function say(s){if(!("speechSynthesis"in window)){toast(s);return}try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(s);u.lang="ur-PK";speechSynthesis.speak(u)}catch(e){toast(s)}}
-function funny(){let a=["اوئے! اتنا swag کہاں سے لائے؟ 😂","نیکسس میں داخل ہو گئے، اب واپس جانا مشکل ہے! 🔥","گیم بھی کھیلو، پڑھائی بھی کرو! 😎","یہاں boredom کی چھٹی ہے! 🚀"];let s=a[Math.floor(Math.random()*a.length)];document.getElementById("say").textContent=s;say(s)}
-function announce(n){
+"use strict";
+
+/* IMPORTANT: WELCOME SCREEN FIX */
+function enterSite(){
+ const welcome=document.getElementById("welcome");
+ if(welcome){
+   welcome.classList.add("hidden");
+   welcome.style.display="none";
+ }
+ document.body.style.overflow="auto";
+ showToast("Welcome to NEXUS 3D!");
+ try{localStorage.setItem("nexusEntered","yes");}catch(e){}
+}
+document.getElementById("goButton").addEventListener("click",enterSite);
+
+/* APK AND TIKTOK LINKS */
+const APK_URL="https://drive.google.com/uc?export=download&id=1BYYbr-XH3jWk8EOBYidYW2ZadLM8_Ayu";
+function openAPK(){window.open(APK_URL,"_blank","noopener");}
+
+/* 50 APP CARDS */
+const appNames=[
+"Calculator","Music Player","Video Player","Photo Editor","Weather",
+"Calendar","Clock","Notes","Translator","Maps",
+"Browser","File Manager","Camera","Gallery","Voice Recorder",
+"PDF Reader","Dictionary","AI Assistant","QR Scanner","Flashlight",
+"News","Learning Hub","Code Editor","Drawing Pad","Password Notes",
+"Stopwatch","Timer","Unit Converter","Currency Helper","Color Picker",
+"Text Editor","Document Viewer","Study Planner","Habit Tracker","Expense Notes",
+"Fitness Notes","Recipe Book","Travel Planner","Wallpaper Gallery","Sound Board",
+"Typing Practice","Memory Trainer","Puzzle Hub","Quiz Master","Task Manager",
+"Link Saver","Idea Board","Photo Gallery","Video Gallery","NEXUS Settings"
+];
+
+/* 50 GAME CARDS */
+const gameNames=[
+"Racing World","City Driver","Space Adventure","Zombie Escape","Puzzle Quest",
+"Snake Classic","Brick Breaker","Memory Match","Tap Challenge","Football Stars",
+"Cricket League","Basketball Pro","Bike Racing","Car Parking","Flight Pilot",
+"Subway Runner","Tower Builder","Chess Master","Checkers","Word Puzzle",
+"Math Challenge","Color Match","Bubble Shooter","Space Shooter","Maze Runner",
+"Treasure Hunt","Fishing Day","Farm Life","City Builder","Parkour Run",
+"Endless Runner","Dino Jump","Tic Tac Toe","Rock Paper Scissors","Number Guess",
+"Reaction Test","Target Tap","2048 Puzzle","Sudoku","Jigsaw Puzzle",
+"Mini Golf","Bowling Club","Pool Master","Skate Ride","Snow Runner",
+"Island Explorer","Ocean Quest","Train Driver","Bus Simulator","NEXUS Adventure"
+];
+
+function makeCards(names,containerId,type){
+ const container=document.getElementById(containerId);
+ names.forEach((name,index)=>{
+  const card=document.createElement("div");
+  card.className="card searchable";
+  card.dataset.name=name.toLowerCase();
+  card.innerHTML=
+   "<h3>"+(type==="app"?"📱":"🎮")+" "+name+"</h3>"+
+   "<p>"+(type==="app"?"NEXUS app slot "+(index+1):"NEXUS game slot "+(index+1))+"</p>"+
+   "<button type='button'>"+(type==="app"?"OPEN APP":"PLAY GAME")+"</button>";
+  card.querySelector("button").addEventListener("click",()=>{
+   showToast(name+" selected. This is a demo slot.");
+  });
+  container.appendChild(card);
+ });
+}
+makeCards(appNames,"appsGrid","app");
+makeCards(gameNames,"gamesGrid","game");
+
+/* SEARCH */
+function searchItems(){
+ const query=document.getElementById("searchBox").value.toLowerCase().trim();
+ document.querySelectorAll(".searchable").forEach(card=>{
+  card.style.display=card.dataset.name.includes(query)?"block":"none";
+ });
+}
+
+/* TOAST MESSAGE */
+let toastTimer;
+function showToast(message){
+ const toast=document.getElementById("toast");
+ toast.textContent=message;
+ toast.style.display="block";
+ clearTimeout(toastTimer);
+ toastTimer=setTimeout(()=>toast.style.display="none",2300);
+}
+
+/* THEME */
+function setAccent(color){
+ document.documentElement.style.setProperty("--cyan",color);
+ showToast("Theme color changed!");
+}
+let themeIndex=0;
+const themes=["#00f5ff","#ff36c9","#7cff4f","#b18cff","#ffb347"];
+function changeTheme(){
+ themeIndex=(themeIndex+1)%themes.length;
+ setAccent(themes[themeIndex]);
+}
+
+/* MATRIX EFFECT */
+let matrixActive=false;
+function toggleMatrix(){
+ matrixActive=!matrixActive;
+ const canvas=document.getElementById("matrix");
+ canvas.style.display=matrixActive?"block":"none";
+ if(matrixActive)drawMatrix();
+ else if(matrixFrame)cancelAnimationFrame(matrixFrame);
+}
+let matrixFrame=0;
+function drawMatrix(){
+ if(!matrixActive)return;
+ const canvas=document.getElementById("matrix");
+ const ctx=canvas.getContext("2d");
+ canvas.width=innerWidth;canvas.height=innerHeight;
+ const size=16,columns=Math.floor(canvas.width/size);
+ const drops=Array.from({length:columns},()=>Math.random()*-50);
+ function frame(){
+  if(!matrixActive)return;
+  ctx.fillStyle="rgba(0,0,0,0.08)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="#00ff88";ctx.font=size+"px monospace";
+  drops.forEach((y,i)=>{
+   ctx.fillText(Math.random()>.5?"1":"0",i*size,y*size);
+   if(y*size>canvas.height&&Math.random()>.97)drops[i]=0;
+   drops[i]++;
+  });
+  matrixFrame=requestAnimationFrame(frame);
+ }
+ frame();
+}
+
+/* PARTICLE BACKGROUND */
+const particleCanvas=document.getElementById("particles");
+const pctx=particleCanvas.getContext("2d");
+let particles=[];
+function resizeParticles(){
+ particleCanvas.width=innerWidth;
+ particleCanvas.height=innerHeight;
+ particles=Array.from({length:65},()=>({
+  x:Math.random()*particleCanvas.width,
+  y:Math.random()*particleCanvas.height,
+  vx:(Math.random()-.5)*.5,
+  vy:(Math.random()-.5)*.5,
+  r:Math.random()*2+1
+ }));
+}
+function animateParticles(){
+ pctx.clearRect(0,0,particleCanvas.width,particleCanvas.height);
+ particles.forEach(p=>{
+  p.x+=p.vx;p.y+=p.vy;
+  if(p.x<0||p.x>particleCanvas.width)p.vx*=-1;
+  if(p.y<0||p.y>particleCanvas.height)p.vy*=-1;
+  pctx.beginPath();pctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+  pctx.fillStyle="#00eaff";pctx.fill();
+ });
+ requestAnimationFrame(animateParticles);
+}
+window.addEventListener("resize",resizeParticles);
+resizeParticles();animateParticles();
+
+/* CLICK CHALLENGE */
+let clickScore=0,clickRunning=false,clickEnd=0;
+function startClicker(){
+ clickScore=0;clickRunning=true;
+ clickEnd=Date.now()+10000;
+ document.getElementById("clickResult").textContent="Score: 0 | 10 seconds!";
+ const timer=setInterval(()=>{
+  const left=Math.max(0,Math.ceil((clickEnd-Date.now())/1000));
+  document.getElementById("clickResult").textContent="Score: "+clickScore+" | "+left+"s";
+  if(Date.now()>=clickEnd){
+   clearInterval(timer);clickRunning=false;
+   document.getElementById("clickResult").textContent="Final score: "+clickScore;
+  }
+ },150);
+}
+function clickPoint(){
+ if(!clickRunning){showToast("Start the challenge first!");return;}
+ clickScore++;
+ document.getElementById("clickResult").textContent="Score: "+clickScore;
+}
+
+/* REACTION TEST */
+let reactionReady=false,reactionStart=0,reactionTimer;
+function startReaction(){
+ const button=document.getElementById("reactionButton");
+ clearTimeout(reactionTimer);reactionReady=false;
+ button.textContent="WAIT...";button.style.background="#10263a";
+ document.getElementById("reactionResult").textContent="Wait for green...";
+ reactionTimer=setTimeout(()=>{
+  reactionReady=true;reactionStart=performance.now();
+  button.textContent="CLICK NOW!";button.style.background="#16843c";
+ },1500+Math.random()*3000);
+}
+function reactionClick(){
+ if(!reactionReady){
+  document.getElementById("reactionResult").textContent="Too early! Try again.";
+  clearTimeout(reactionTimer);return;
+ }
+ const time=Math.round(performance.now()-reactionStart);
+ reactionReady=false;
+ document.getElementById("reactionButton").textContent="WAIT...";
+ document.getElementById("reactionButton").style.background="";
+ document.getElementById("reactionResult").textContent="Your time: "+time+" ms";
+}
+
+/* LUCKY NUMBER */
+function luckyNumber(){
+ document.getElementById("luckyResult").textContent=
+  "Your number: "+(Math.floor(Math.random()*100)+1);
+}
+
+/* MEMORY GAME */
+let memoryValue="";
+function memoryStart(){
+ memoryValue=String(Math.floor(10000+Math.random()*90000));
+ const output=document.getElementById("memoryNumber");
+ output.textContent=memoryValue;
+ setTimeout(()=>{if(output.textContent===memoryValue)output.textContent="Number hidden";},2200);
+}
+function memoryCheck(){
+ const answer=document.getElementById("memoryInput").value.trim();
+ document.getElementById("memoryResult").textContent=
+  answer===memoryValue&&memoryValue?"Correct! Great memory!":"Not quite. Try again!";
+}
+
+/* NOTES */
+function saveNotes(){
+ try{
+  localStorage.setItem("nexusNotes",document.getElementById("notes").value);
+  document.getElementById("notesResult").textContent="Notes saved on this device.";
+ }catch(e){document.getElementById("notesResult").textContent="Could not save notes.";}
+}
+function loadNotes(){
+ try{
+  document.getElementById("notes").value=localStorage.getItem("nexusNotes")||"";
+  document.getElementById("notesResult").textContent="Notes loaded.";
+ }catch(e){}
+}
+loadNotes();
+
+/* TASK LIST */
+let tasks=[];
+function addTask(){
+ const input=document.getElementById("taskInput");
+ const value=input.value.trim();
+ if(!value)return;
+ tasks.push(value);input.value="";renderTasks();
+}
+function renderTasks(){
+ const list=document.getElementById("taskList");
+ list.innerHTML="";
+ tasks.forEach((task,index)=>{
+  const row=document.createElement("div");
+  row.style.margin="8px 0";
+  const label=document.createElement("span");
+  label.textContent="• "+task+" ";
+  const remove=document.createElement("button");
+  remove.textContent="DONE";
+  remove.style.padding="5px 8px";
+  remove.onclick=()=>{tasks.splice(index,1);renderTasks();};
+  row.append(label,remove);list.appendChild(row);
+ });
+}
+
+/* SAFE BASIC CALCULATOR */
+function calculate(){
+ const input=document.getElementById("calcInput").value.trim();
+ const output=document.getElementById("calcResult");
+ if(!/^[0-9+\-*/().\s]+$/.test(input)){
+  output.textContent="Only numbers and + - * / ( ) allowed.";
+  return;
+ }
+ try{
+  const tokens=input.match(/\d+(?:\.\d+)?|[()+\-*/]/g)||[];
+  if(tokens.join("")!==input.replace(/\s/g,""))throw Error();
+  let pos=0;
+  function expression(){
+   let value=term();
+   while(tokens[pos]==="+"||tokens[pos]==="-"){
+    const op=tokens[pos++],right=term();
+    value=op==="+"?value+right:value-right;
+   }
+   return value;
+  }
+  function term(){
+   let value=factor();
+   while(tokens[pos]==="*"||tokens[pos]==="/"){
+    const op=tokens[pos++],right=factor();
+    if(op==="/"&&right===0)throw Error();
+    value=op==="*"?value*right:value/right;
+   }
+   return value;
+  }
+  function factor(){
