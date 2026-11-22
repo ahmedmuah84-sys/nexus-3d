@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Downloads | Gamer Zone{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">GAMER ZONE FILE HUB</p>
+  <h1>DOWNLOAD <span>FILES.</span></h1>
+  <p>Find the files shared by Gamer Zone. Choose a file and tap download.</p>
+</section>
+<section class="panel">
+  <div class="panel-head"><div><p class="eyebrow">COMMUNITY LIBRARY</p><h2>AVAILABLE FILES</h2></div><span class="count">{{ files|length }} FILE(S)</span></div>
+  {% if files %}
+  <div class="file-list">
+    {% for file in files %}
+    <article class="file-row">
+      <div class="file-icon">↓</div>
+      <div class="file-meta"><strong>{{ file.original_name }}</strong><small>{{ "%.2f"|format(file.size / 1048576) }} MB · {{ file.uploaded_at }}</small></div>
+      <a class="download" href="{{ url_for('download', file_id=file.id) }}">Download ↗</a>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+    <div class="empty"><div>▤</div><h3>No files yet</h3><p>New uploads will appear here.</p></div>
+  {% endif %}
+</section>
+{% endblock %}
