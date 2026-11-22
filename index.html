@@ -575,3 +575,60 @@ function calculate(){
    return value;
   }
   function factor(){
+   if(tokens[pos]==="-"){pos++;return -factor();}
+   if(tokens[pos]==="+"){pos++;return factor();}
+   if(tokens[pos]==="("){
+    pos++;const value=expression();
+    if(tokens[pos++]!==")")throw Error();
+    return value;
+   }
+   const token=tokens[pos++];
+   if(!token||!(/^\d/.test(token)))throw Error();
+   return Number(token);
+  }
+  const result=expression();
+  if(pos!==tokens.length||!Number.isFinite(result))throw Error();
+  output.textContent="Answer: "+result;
+ }catch(e){output.textContent="Invalid calculation.";}
+}
+
+/* SURPRISE */
+const surprises=[
+"Keep learning and keep building!",
+"Your next idea could be amazing.",
+"Explore something new today!",
+"Small steps make big projects.",
+"Welcome to your digital universe!"
+];
+function surprise(){
+ document.getElementById("surpriseResult").textContent=
+  surprises[Math.floor(Math.random()*surprises.length)];
+}
+
+/* URDU VOICE MASCOT */
+const botMessages=[
+"Assalam-o-Alaikum! NEXUS mein khush aamdeed!",
+"Welcome! Aaj kuch naya explore karte hain.",
+"Mehnat karte raho, apne ideas ko reality banao!",
+"Games aur tools explore karo. Enjoy!"
+];
+let botIndex=0;
+function newBotMessage(){
+ botIndex=(botIndex+1)%botMessages.length;
+ document.getElementById("botMessage").textContent=botMessages[botIndex];
+}
+function speakBot(){
+ const text=document.getElementById("botMessage").textContent;
+ if(!("speechSynthesis" in window)){showToast("Voice not supported in this browser.");return;}
+ speechSynthesis.cancel();
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang="ur-PK";
+ utterance.rate=.9;
+ speechSynthesis.speak(utterance);
+}
+
+/* DO NOT AUTO-LOCK THE SITE AFTER RETURNING FROM TIKTOK */
+document.body.style.overflow="auto";
+</script>
+</body>
+</html>
