@@ -1,25 +1,609 @@
-{% extends "base.html" %}
-{% block title %}Downloads | Gamer Zone{% endblock %}
-{% block content %}
-<section class="hero">
-  <p class="eyebrow">GAMER ZONE FILE HUB</p>
-  <h1>DOWNLOAD <span>FILES.</span></h1>
-  <p>Find the files shared by Gamer Zone. Choose a file and tap download.</p>
-</section>
-<section class="panel">
-  <div class="panel-head"><div><p class="eyebrow">COMMUNITY LIBRARY</p><h2>AVAILABLE FILES</h2></div><span class="count">{{ files|length }} FILE(S)</span></div>
-  {% if files %}
-  <div class="file-list">
-    {% for file in files %}
-    <article class="file-row">
-      <div class="file-icon">↓</div>
-      <div class="file-meta"><strong>{{ file.original_name }}</strong><small>{{ "%.2f"|format(file.size / 1048576) }} MB · {{ file.uploaded_at }}</small></div>
-      <a class="download" href="{{ url_for('download', file_id=file.id) }}">Download ↗</a>
-    </article>
-    {% endfor %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080511">
+<meta name="description" content="NEXUS 3D - Explore games, apps and futuristic digital worlds.">
+<title>NEXUS 3D | Gaming Universe</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;600;700&display=swap');
+
+:root {
+ --bg:#080511;
+ --panel:#151027;
+ --purple:#a855f7;
+ --blue:#00e5ff;
+ --pink:#ff38bd;
+ --white:#f5f0ff;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+ background:var(--bg);
+ color:var(--white);
+ font-family:'Rajdhani',sans-serif;
+ overflow-x:hidden;
+}
+
+canvas{
+ position:fixed;
+ inset:0;
+ z-index:-1;
+ pointer-events:none;
+}
+
+nav{
+ position:sticky;
+ top:0;
+ z-index:20;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:18px 7%;
+ background:#0b0719d9;
+ backdrop-filter:blur(18px);
+ border-bottom:1px solid #a855f744;
+}
+
+.logo{
+ font-family:Orbitron,sans-serif;
+ font-size:22px;
+ font-weight:900;
+ color:var(--blue);
+ text-shadow:0 0 15px var(--blue);
+}
+
+nav a{
+ color:white;
+ text-decoration:none;
+ margin-left:20px;
+ font-size:18px;
+ transition:.3s;
+}
+
+nav a:hover{color:var(--blue)}
+
+.hero{
+ min-height:580px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ padding:70px 15px;
+ perspective:1000px;
+}
+
+.tag{
+ color:var(--blue);
+ letter-spacing:5px;
+ font-size:14px;
+}
+
+.hero h1{
+ font-family:Orbitron,sans-serif;
+ font-size:clamp(38px,8vw,88px);
+ font-weight:900;
+ margin:25px 0;
+ background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));
+ background-clip:text;
+ -webkit-background-clip:text;
+ color:transparent;
+ animation:float 3s ease-in-out infinite;
+ filter:drop-shadow(0 0 15px #9b45ff77);
+}
+
+@keyframes float{
+ 50%{transform:translateY(-12px) rotateX(5deg)}
+}
+
+.hero p{
+ font-size:22px;
+ color:#bdb3d1;
+ margin-bottom:30px;
+}
+
+.btn{
+ border:1px solid var(--blue);
+ background:linear-gradient(110deg,#39206d,#102d54);
+ color:white;
+ padding:13px 28px;
+ border-radius:8px;
+ cursor:pointer;
+ font-family:Orbitron,sans-serif;
+ font-size:12px;
+ transition:.3s;
+ box-shadow:0 0 15px #00e5ff33;
+}
+
+.btn:hover{
+ transform:translateY(-4px) scale(1.04);
+ box-shadow:0 0 25px var(--blue);
+ background:#17446a;
+}
+
+.search-wrap{
+ padding:15px;
+ text-align:center;
+}
+
+.search{
+ width:min(90%,500px);
+ padding:16px 22px;
+ border:1px solid #7744bd;
+ background:#151027;
+ color:white;
+ border-radius:30px;
+ outline:none;
+ font-size:17px;
+}
+
+.search:focus{
+ border-color:var(--blue);
+ box-shadow:0 0 15px #00e5ff55;
+}
+
+section{padding:65px 8%}
+
+.heading{
+ font-family:Orbitron,sans-serif;
+ font-size:clamp(20px,4vw,30px);
+ color:var(--blue);
+ margin-bottom:30px;
+ text-shadow:0 0 12px #00e5ff66;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:25px;
+}
+
+.card{
+ background:linear-gradient(145deg,#20153b,#100c20);
+ border:1px solid #7948aa66;
+ border-radius:16px;
+ padding:17px;
+ text-align:center;
+ position:relative;
+ transform-style:preserve-3d;
+ transition:transform .2s,border .3s,box-shadow .3s;
+ overflow:hidden;
+}
+
+.card:hover{
+ border-color:var(--blue);
+ box-shadow:0 10px 35px #8b35ff55;
+}
+
+.art{
+ height:155px;
+ border-radius:12px;
+ margin-bottom:18px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:65px;
+ background:
+ radial-gradient(circle,#6331a7,#19102e 70%);
+ text-shadow:0 0 30px var(--blue);
+}
+
+.card h3{
+ font-family:Orbitron,sans-serif;
+ font-size:16px;
+ margin-bottom:8px;
+}
+
+.card p{
+ color:#aaa0bb;
+ font-size:16px;
+ margin-bottom:17px;
+}
+
+.card .btn{width:100%}
+
+.filters{
+ display:flex;
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:10px;
+ margin-bottom:28px;
+}
+
+.filter{
+ padding:9px 18px;
+ background:#20153b;
+ color:white;
+ border:1px solid #7548ac;
+ border-radius:25px;
+ cursor:pointer;
+}
+
+.filter.active{
+ background:#6033a3;
+ border-color:var(--blue);
+}
+
+.banner{
+ text-align:center;
+ padding:55px 20px;
+ border:1px solid #8c44cc;
+ border-radius:20px;
+ background:linear-gradient(120deg,#281247,#092c46);
+}
+
+.banner h2{
+ font-family:Orbitron,sans-serif;
+ font-size:clamp(23px,5vw,38px);
+ color:var(--pink);
+ margin-bottom:15px;
+}
+
+footer{
+ padding:35px 15px;
+ text-align:center;
+ color:#8c819e;
+ border-top:1px solid #7440a544;
+}
+
+.modal{
+ position:fixed;
+ inset:0;
+ z-index:100;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ background:#05030ddd;
+ padding:15px;
+}
+
+.modal.show{display:flex}
+
+.modal-box{
+ width:min(550px,100%);
+ padding:28px;
+ background:#17102a;
+ border:1px solid var(--blue);
+ border-radius:18px;
+ box-shadow:0 0 45px #00e5ff44;
+ text-align:center;
+}
+
+.modal-box h2{
+ color:var(--blue);
+ font-family:Orbitron,sans-serif;
+ margin-bottom:18px;
+}
+
+.modal-box p{margin:15px 0;color:#c7bbd7}
+
+.close{
+ float:right;
+ cursor:pointer;
+ font-size:25px;
+ color:var(--pink);
+}
+
+.hidden{display:none!important}
+
+#gameArea{
+ display:none;
+ margin-top:20px;
+ padding:20px;
+ background:#090619;
+ border:1px solid var(--purple);
+ border-radius:12px;
+}
+
+#gameArea button{margin:10px}
+
+#score{
+ color:var(--blue);
+ font-size:24px;
+ font-family:Orbitron,sans-serif;
+}
+
+@media(max-width:600px){
+ nav{padding:15px 4%}
+ .logo{font-size:16px}
+ nav a{font-size:15px;margin-left:10px}
+ .hero{min-height:480px}
+ section{padding:45px 5%}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .card{padding:10px}
+ .art{height:115px;font-size:48px}
+ .card h3{font-size:12px}
+ .card p{font-size:14px}
+ .card .btn{padding:11px 5px;font-size:10px}
+}
+
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{
+ animation:none!important;
+ transition:none!important;
+ scroll-behavior:auto!important;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<nav>
+ <div class="logo">NEXUS 3D ⚡</div>
+ <div>
+  <a href="#games">Games</a>
+  <a href="#apps">Apps</a>
+  <a href="#about">About</a>
+ </div>
+</nav>
+
+<header class="hero">
+ <div class="tag">WELCOME TO THE NEXT DIMENSION</div>
+ <h1>NEXUS 3D</h1>
+ <p>ENTER THE FUTURE. PLAY WITHOUT LIMITS.</p>
+ <button class="btn" onclick="goTo('games')">
+ EXPLORE THE UNIVERSE ✦
+ </button>
+</header>
+
+<div class="search-wrap">
+ <input class="search" id="search"
+ placeholder="🔍 Search games and apps..."
+ oninput="searchItems()">
+</div>
+
+<section id="games">
+ <h2 class="heading">🎮 GAMING ZONE</h2>
+
+ <div class="filters">
+  <button class="filter active" onclick="filter('all',this)">All</button>
+  <button class="filter" onclick="filter('action',this)">Action</button>
+  <button class="filter" onclick="filter('arcade',this)">Arcade</button>
+  <button class="filter" onclick="filter('racing',this)">Racing</button>
+ </div>
+
+ <div class="grid" id="gameGrid">
+
+  <div class="card" data-name="Neon Clicker" data-category="arcade">
+   <div class="art">⚡</div>
+   <h3>NEON CLICKER</h3>
+   <p>Play our built-in mini game</p>
+   <button class="btn" onclick="playMiniGame()">PLAY NOW</button>
   </div>
-  {% else %}
-    <div class="empty"><div>▤</div><h3>No files yet</h3><p>New uploads will appear here.</p></div>
-  {% endif %}
+
+  <div class="card" data-name="My Adventure" data-category="action">
+   <div class="art">🚀</div>
+   <h3>MY ADVENTURE</h3>
+   <p>Your custom game</p>
+   <button class="btn" onclick="openLink('YOUR_GAME_LINK')">PLAY NOW</button>
+  </div>
+
+  <div class="card" data-name="Racing World" data-category="racing">
+   <div class="art">🏎️</div>
+   <h3>RACING WORLD</h3>
+   <p>High-speed racing zone</p>
+   <button class="btn" onclick="openLink('YOUR_RACING_GAME_LINK')">PLAY NOW</button>
+  </div>
+
+  <div class="card" data-name="Space Battle" data-category="action">
+   <div class="art">👾</div>
+   <h3>SPACE BATTLE</h3>
+   <p>Explore your galaxy</p>
+   <button class="btn" onclick="openLink('YOUR_SPACE_GAME_LINK')">PLAY NOW</button>
+  </div>
+
+ </div>
 </section>
-{% endblock %}
+
+<section id="apps">
+ <h2 class="heading">📱 APPLICATION HUB</h2>
+
+ <div class="grid">
+
+  <div class="card" data-name="My Android App">
+   <div class="art">📱</div>
+   <h3>MY ANDROID APP</h3>
+   <p>Download your application</p>
+   <button class="btn" onclick="openLink('YOUR_APK_LINK')">DOWNLOAD</button>
+  </div>
+
+  <div class="card" data-name="My Tools">
+   <div class="art">🛠️</div>
+   <h3>MY TOOLS</h3>
+   <p>Useful digital tools</p>
+   <button class="btn" onclick="openLink('YOUR_TOOLS_LINK')">OPEN APP</button>
+  </div>
+
+  <div class="card" data-name="Web Apps">
+   <div class="art">🌐</div>
+   <h3>WEB APPS</h3>
+   <p>Explore online applications</p>
+   <button class="btn" onclick="openLink('YOUR_WEB_APP_LINK')">EXPLORE</button>
+  </div>
+
+ </div>
+</section>
+
+<section id="about">
+ <div class="banner">
+  <h2>READY PLAYER ONE?</h2>
+  <p>YOUR WORLD. YOUR GAMES. YOUR RULES.</p>
+  <br>
+  <button class="btn" onclick="goTo('games')">START EXPLORING</button>
+ </div>
+</section>
+
+<footer>
+ <p>NEXUS 3D © 2026</p>
+ <p>BUILT FOR THE NEXT GENERATION ♡</p>
+</footer>
+
+<div class="modal" id="modal">
+ <div class="modal-box">
+  <span class="close" onclick="closeModal()">×</span>
+  <h2 id="modalTitle">NEXUS GAME</h2>
+  <p id="modalText">Welcome to the gaming zone!</p>
+
+  <div id="gameArea">
+   <p>CLICK THE ENERGY CORE!</p>
+   <div id="score">SCORE: 0</div>
+   <button class="btn" onclick="clickCore()">⚡ TAP ME ⚡</button>
+   <p id="gameMessage">Reach 20 points!</p>
+  </div>
+
+  <button class="btn" onclick="closeModal()">CLOSE</button>
+ </div>
+</div>
+
+<script>
+// STAR PARTICLE BACKGROUND
+const canvas=document.getElementById('stars');
+const ctx=canvas.getContext('2d');
+let particles=[];
+
+function resize(){
+ canvas.width=innerWidth;
+ canvas.height=innerHeight;
+}
+
+resize();
+addEventListener('resize',resize);
+
+for(let i=0;i<85;i++){
+ particles.push({
+  x:Math.random()*innerWidth,
+  y:Math.random()*innerHeight,
+  r:Math.random()*2,
+  s:Math.random()*.6+.2
+ });
+}
+
+function animate(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ particles.forEach(p=>{
+  ctx.beginPath();
+  ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+  ctx.fillStyle='#00e5ff';
+  ctx.shadowBlur=12;
+  ctx.shadowColor='#00e5ff';
+  ctx.fill();
+  p.y-=p.s;
+  if(p.y<0){
+   p.y=canvas.height;
+   p.x=Math.random()*canvas.width;
+  }
+ });
+ requestAnimationFrame(animate);
+}
+animate();
+
+// CARD 3D TILT
+document.querySelectorAll('.card').forEach(card=>{
+ card.addEventListener('pointermove',e=>{
+  if(e.pointerType==='touch')return;
+  const r=card.getBoundingClientRect();
+  const x=(e.clientX-r.left)/r.width-.5;
+  const y=(e.clientY-r.top)/r.height-.5;
+  card.style.transform=
+   `perspective(800px) rotateY(${x*18}deg) rotateX(${-y*18}deg) translateY(-5px)`;
+ });
+ card.addEventListener('pointerleave',()=>{
+  card.style.transform='';
+ });
+});
+
+// NAVIGATION
+function goTo(id){
+ document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+// SEARCH
+function searchItems(){
+ const q=document.getElementById('search').value.toLowerCase();
+ document.querySelectorAll('.card').forEach(c=>{
+  c.classList.toggle('hidden',
+   !c.dataset.name.toLowerCase().includes(q));
+ });
+}
+
+// CATEGORY FILTER
+function filter(category,button){
+ document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
+ button.classList.add('active');
+
+ document.querySelectorAll('#gameGrid .card').forEach(card=>{
+  card.classList.toggle('hidden',
+   category!=='all' && card.dataset.category!==category);
+ });
+ document.getElementById('search').value='';
+}
+
+// LINKS
+function openLink(url){
+ if(!url || url.startsWith('YOUR_')){
+  showModal('LINK NOT ADDED','Add your actual game or app link in the HTML first.');
+  return;
+ }
+ try{
+  const parsed=new URL(url,location.href);
+  if(!['https:','http:'].includes(parsed.protocol)){
+   showModal('INVALID LINK','Only web links are supported.');
+   return;
+  }
+  window.open(parsed.href,'_blank','noopener,noreferrer');
+ }catch(e){
+  showModal('INVALID LINK','Please enter a valid URL.');
+ }
+}
+
+// MODAL
+function showModal(title,message){
+ document.getElementById('modalTitle').textContent=title;
+ document.getElementById('modalText').textContent=message;
+ document.getElementById('gameArea').style.display='none';
+ document.getElementById('modal').classList.add('show');
+}
+
+function closeModal(){
+ document.getElementById('modal').classList.remove('show');
+}
+
+// BUILT-IN MINI GAME
+let score=0;
+let ended=false;
+
+function playMiniGame(){
+ score=0;
+ ended=false;
+ document.getElementById('modalTitle').textContent='NEON CLICKER';
+ document.getElementById('modalText').textContent='Test your clicking skills!';
+ document.getElementById('gameArea').style.display='block';
+ document.getElementById('score').textContent='SCORE: 0';
+ document.getElementById('gameMessage').textContent='Reach 20 points!';
+ document.getElementById('modal').classList.add('show');
+}
+
+function clickCore(){
+ if(ended)return;
+ score++;
+ document.getElementById('score').textContent='SCORE: '+score;
+ if(score>=20){
+  ended=true;
+  document.getElementById('gameMessage').textContent='YOU WIN! NEON MASTER! 🏆';
+ }
+}
+</script>
+
+</body>
+</html>
+
